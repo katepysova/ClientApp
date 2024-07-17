@@ -10,13 +10,13 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1440,
+    height: 800,
     webPreferences: {
       // eslint-disable-next-line no-undef
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
-    autoHideMenuBar: true
+    autoHideMenuBar: false
   });
 
   // and load the index.html of the app.
@@ -25,6 +25,7 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+  mainWindow.maximize();
 };
 
 // This method will be called when Electron has finished

@@ -1,7 +1,7 @@
 import React from "react";
-import HomePage from "./pages/home-page.jsx";
 import "@styles/main.scss";
+import AppRouter from "@/router/Router.jsx";
 
 export default function App() {
-  return <HomePage />;
+  return <AppRouter />;
 }
