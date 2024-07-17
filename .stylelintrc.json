@@ -1,0 +1,32 @@
+{
+  "extends":[
+    "stylelint-config-standard",
+    "stylelint-config-standard-scss",
+    "stylelint-prettier/recommended"
+  ],
+  "plugins": [
+    "stylelint-prettier"
+  ],
+  "ignoreFiles": [
+    "**/*.{jsx,js,json}"
+  ],
+  "rules": {
+    "no-empty-source": null,
+    "max-nesting-depth": 5,
+    "color-hex-case": "lower",
+    "selector-class-pattern": null,
+    "no-descending-specificity" : null,
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": [
+          "blockless-after-same-name-blockless",
+          "first-nested"
+        ],
+        "ignore": [
+          "after-comment"
+        ]
+      }
+    ]
+  }
+}
