@@ -9,7 +9,7 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:prettier/recommended"
   ],
-  plugins: ["react", "import", "prettier"],
+  plugins: ["react", "import", "prettier", "module-resolver"],
   parser: "@babel/eslint-parser",
   parserOptions: {
     sourceType: "module",
@@ -29,16 +29,15 @@ module.exports = {
     ],
     "react/react-in-jsx-scope": 0,
     "react/jsx-uses-vars": "error",
-    "no-console": "error"
+    "no-console": "error",
+    "module-resolver/use-alias": 2
   },
   settings: {
     react: {
       version: "detect"
     },
     "import/resolver": {
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"]
-      }
+      "babel-module": {}
     }
   }
 };
