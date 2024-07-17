@@ -1,8 +1,7 @@
 import React from "react";
-import Home from "@components/Home.jsx";
-
+import HomePage from "./pages/home-page.jsx";
 import "@styles/main.scss";
 
 export default function App() {
-  return <Home />;
+  return <HomePage />;
 }

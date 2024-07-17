@@ -12,6 +12,7 @@
   ],
   "rules": {
     "no-empty-source": null,
+    "block-no-empty": null,
     "max-nesting-depth": 5,
     "selector-class-pattern": null,
     "no-descending-specificity" : null,

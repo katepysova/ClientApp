@@ -1,0 +1,47 @@
+@import "./variables";
+
+* {
+  &,
+  &::before,
+  &::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: inherit;
+    font-family: inherit;
+  }
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $color-bg;
+}
+
+img {
+  vertical-align: top;
+}
+
+svg {
+  color: inherit;
+  width: 24px;
+  height: 24px;
+}
+
+a {
+  &:link,
+  &:visited {
+    text-decoration: none;
+  }
+}
+
+ul {
+  list-style-type: none;
+}
+
+button {
+  cursor: pointer;
+}
