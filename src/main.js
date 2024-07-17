@@ -1,11 +1,20 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 // eslint-disable-next-line no-unused-vars
 const path = require("node:path");
+const sqlite3 = require("sqlite3").verbose();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
+
+let db = new sqlite3.Database(path.join(app.getAppPath(), "/src/db/test.db"), (err) => {
+  if (err) {
+    console.log("Error opening DB");
+  } else {
+    console.log("DB connected");
+  }
+});
 
 const createWindow = () => {
   // Create the browser window.
@@ -13,8 +22,9 @@ const createWindow = () => {
     width: 1440,
     height: 800,
     webPreferences: {
-      // eslint-disable-next-line no-undef
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
+      preload: path.join(app.getAppPath(), "/src/preload.js"),
+      contextIsolation: true,
+      enableRemoteModule: false
     },
     autoHideMenuBar: false
   });
@@ -43,6 +53,18 @@ app.whenReady().then(() => {
   });
 });
 
+ipcMain.handle("fetch-data", async (event, query) => {
+  return new Promise((resolve, reject) => {
+    db.all(query, [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
+  });
+});
+
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
@@ -51,6 +73,5 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.

@@ -29,7 +29,7 @@ module.exports = {
     ],
     "react/react-in-jsx-scope": 0,
     "react/jsx-uses-vars": "error",
-    "no-console": "error",
+    "no-console": "off",
     "module-resolver/use-alias": 2
   },
   settings: {
