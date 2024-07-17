@@ -5,18 +5,9 @@ module.exports = {
    */
   entry: "./src/main.js",
   module: {
-    rules: require("./webpack.rules"),
+    rules: require("./webpack.rules")
   },
   resolve: {
-    extensions: [
-      ".js",
-      ".ts",
-      ".jsx",
-      ".tsx",
-      ".css",
-      ".json",
-      ".scss",
-      ".sass",
-    ],
-  },
+    extensions: [".js", ".ts", ".jsx", ".tsx", ".css", ".json", ".scss", ".sass"]
+  }
 };

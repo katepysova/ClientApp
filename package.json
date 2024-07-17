@@ -11,7 +11,8 @@
     "publish": "electron-forge publish",
     "lint:fix": "eslint --ext .js --ext .jsx --fix .",
     "stylelint:fix": "stylelint --fix **/*.{scss,sass}",
-    "format": "npm run stylelint:fix && npm run lint:fix"
+    "format": "npm run stylelint:fix && npm run lint:fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@babel/core": "^7.24.9",
@@ -35,6 +36,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.34.4",
+    "husky": "^9.0.11",
     "node-loader": "^2.0.0",
     "prettier": "^3.3.3",
     "sass": "^1.77.8",

@@ -13,7 +13,6 @@
   "rules": {
     "no-empty-source": null,
     "max-nesting-depth": 5,
-    "color-hex-case": "lower",
     "selector-class-pattern": null,
     "no-descending-specificity" : null,
     "at-rule-empty-line-before": [

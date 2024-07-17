@@ -7,7 +7,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:import/recommended",
-    "plugin:prettier/recommended",
+    "plugin:prettier/recommended"
   ],
   plugins: ["react", "import", "prettier"],
   parser: "@babel/eslint-parser",
@@ -16,29 +16,29 @@ module.exports = {
     ecmaVersion: 8,
     requireConfigFile: false,
     ecmaFeatures: {
-      jsx: true,
-    },
+      jsx: true
+    }
   },
   ignorePatterns: ["node_modules/"],
   rules: {
     "react/jsx-filename-extension": [
       1,
       {
-        extensions: [".js", ".jsx"],
-      },
+        extensions: [".js", ".jsx"]
+      }
     ],
     "react/react-in-jsx-scope": 0,
     "react/jsx-uses-vars": "error",
-    "no-console": "error",
+    "no-console": "error"
   },
   settings: {
     react: {
-      version: "detect",
+      version: "detect"
     },
     "import/resolver": {
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-      },
-    },
-  },
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
 };
