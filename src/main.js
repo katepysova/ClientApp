@@ -22,9 +22,12 @@ const createWindow = () => {
     width: 1440,
     height: 800,
     webPreferences: {
-      preload: path.join(app.getAppPath(), "/src/preload.js"),
+      //preload: path.join(app.getAppPath(), "/src/preload.js"),
+      // eslint-disable-next-line no-undef
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: true,
       contextIsolation: true,
-      enableRemoteModule: false
+      enableRemoteModule: true
     },
     autoHideMenuBar: false
   });

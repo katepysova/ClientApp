@@ -6,13 +6,14 @@
   "main": ".webpack/main",
   "scripts": {
     "start": "NODE_ENV=development BABEL_ENV=development electron-forge start",
-    "package": "electron-forge package",
+    "package": "NODE_ENV=production BABEL_ENV=production electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint:fix": "eslint --ext .js --ext .jsx --fix .",
     "stylelint:fix": "stylelint --fix **/*.{scss,sass}",
     "format": "npm run stylelint:fix && npm run lint:fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "rebuild": "electron-rebuild -f -w sqlite3"
   },
   "devDependencies": {
     "@babel/core": "^7.24.9",
@@ -32,6 +33,7 @@
     "babel-plugin-module-resolver": "^5.0.2",
     "css-loader": "^6.0.0",
     "electron": "31.2.1",
+    "electron-rebuild": "^3.2.9",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-import-resolver-babel-module": "^5.3.2",
