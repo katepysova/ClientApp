@@ -1,0 +1,44 @@
+@import "src/styles/variables";
+
+.header {
+  height: $header-height-desktop;
+  background-color: $color-white;
+  box-shadow: $box-shadow;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  min-width: 100%;
+
+  &__container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .title {
+      font-size: 18px;
+      font-weight: normal;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+  }
+
+  &__logo {
+    width: 60px;
+  }
+}
+
+.update-status {
+  font-weight: normal;
+}

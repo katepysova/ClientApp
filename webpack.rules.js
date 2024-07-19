@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = [
   {
     test: /native_modules[/\\].+\.node$/,
@@ -18,6 +20,11 @@ module.exports = [
     use: [{ loader: "style-loader" }, { loader: "css-loader" }]
   },
   {
+    test: /\.(png|svg|jpg|jpeg|webp)$/,
+    exclude: /icons/,
+    type: "asset/resource"
+  },
+  {
     test: /\.jsx?$/,
     use: {
       loader: "babel-loader",
@@ -30,5 +37,18 @@ module.exports = [
   {
     test: /\.s[ac]ss$/i,
     use: ["style-loader", "css-loader", "sass-loader"]
+  },
+  {
+    test: /\.svg$/,
+    include: path.join(__dirname, "./src/icons"),
+    use: [
+      {
+        loader: "svg-sprite-loader",
+        options: {
+          spriteFilename: () => "sprite.svg",
+          symbolId: (filePath) => path.basename(filePath)
+        }
+      }
+    ]
   }
 ];

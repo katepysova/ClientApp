@@ -22,10 +22,15 @@ let db = new sqlite3.Database(dbPath, (err) => {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1440, height: 800, webPreferences: {
+    width: 1440,
+    height: 800,
+    webPreferences: {
       // eslint-disable-next-line no-undef
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY, nodeIntegration: true, contextIsolation: true
-    }, autoHideMenuBar: false
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: true,
+      contextIsolation: true
+    },
+    autoHideMenuBar: false
   });
 
   // and load the index.html of the app.

@@ -1,0 +1,8 @@
+@import "src/styles/variables";
+
+.card {
+  background-color: $color-white;
+  padding: 16px;
+  box-shadow: $box-shadow;
+  border-radius: 8px;
+}
