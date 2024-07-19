@@ -4,15 +4,17 @@ import "./Home.scss";
 export default function Home() {
   const [data, setData] = useState([]);
 
+  const getData = async () => {
+    try {
+      const data = await window.electron.fetchData("SELECT * FROM TaskConsumption");
+      setData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    window?.api
-      ?.fetchData("SELECT * FROM TaskConsumption")
-      .then((result) => {
-        setData(result);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    getData();
   }, []);
 
   return (

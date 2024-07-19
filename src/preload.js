@@ -3,6 +3,6 @@
 
 const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("api", {
-  fetchData: (query) => ipcRenderer.invoke("fetch-data", query)
+contextBridge.exposeInMainWorld("electron", {
+  fetchData: (query) => ipcRenderer.invoke("fetchData", query)
 });

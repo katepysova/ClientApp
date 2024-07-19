@@ -1,14 +1,19 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
-// eslint-disable-next-line no-unused-vars
 const path = require("node:path");
 const sqlite3 = require("sqlite3").verbose();
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+const IS_DEV = process.env.NODE_ENV === "development";
+
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-let db = new sqlite3.Database(path.join(app.getAppPath(), "/src/db/test.db"), (err) => {
+const dbPath = IS_DEV ? "test.db" : path.resolve(app.getPath("userData"), "test.db");
+console.log( path.resolve(app.getPath("userData"), "test.db"))
+console.log(dbPath);
+console.log({IS_DEV})
+
+let db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.log("Error opening DB");
   } else {
@@ -22,12 +27,10 @@ const createWindow = () => {
     width: 1440,
     height: 800,
     webPreferences: {
-      //preload: path.join(app.getAppPath(), "/src/preload.js"),
       // eslint-disable-next-line no-undef
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       nodeIntegration: true,
-      contextIsolation: true,
-      enableRemoteModule: true
+      contextIsolation: true
     },
     autoHideMenuBar: false
   });
@@ -56,7 +59,7 @@ app.whenReady().then(() => {
   });
 });
 
-ipcMain.handle("fetch-data", async (event, query) => {
+ipcMain.handle("fetchData", async (event, query) => {
   return new Promise((resolve, reject) => {
     db.all(query, [], (err, rows) => {
       if (err) {
