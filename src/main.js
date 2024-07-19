@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
-const path = require("node:path");
 const sqlite3 = require("sqlite3").verbose();
 
 const IS_DEV = process.env.NODE_ENV === "development";
@@ -8,8 +7,7 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-const dbPath = IS_DEV ? "test.db" : path.join(process.resourcesPath, "test.db");
-console.log(path.join(process.resourcesPath, "test.db"));
+const dbPath = "/Library/Application Support/PowerObserver/energy_measurements.db";
 console.log(dbPath);
 console.log({ IS_DEV });
 
@@ -24,15 +22,10 @@ let db = new sqlite3.Database(dbPath, (err) => {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1440,
-    height: 800,
-    webPreferences: {
+    width: 1440, height: 800, webPreferences: {
       // eslint-disable-next-line no-undef
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      nodeIntegration: true,
-      contextIsolation: true
-    },
-    autoHideMenuBar: false
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY, nodeIntegration: true, contextIsolation: true
+    }, autoHideMenuBar: false
   });
 
   // and load the index.html of the app.
