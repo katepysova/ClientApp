@@ -8,8 +8,8 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-const dbPath = IS_DEV ? "test.db" : path.resolve(app.getPath("userData"), "test.db");
-console.log(path.resolve(app.getPath("userData"), "test.db"));
+const dbPath = IS_DEV ? "test.db" : path.join(process.resourcesPath, "test.db");
+console.log(path.join(process.resourcesPath, "test.db"));
 console.log(dbPath);
 console.log({ IS_DEV });
 
