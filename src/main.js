@@ -9,9 +9,9 @@ if (require("electron-squirrel-startup")) {
 }
 
 const dbPath = IS_DEV ? "test.db" : path.resolve(app.getPath("userData"), "test.db");
-console.log( path.resolve(app.getPath("userData"), "test.db"))
+console.log(path.resolve(app.getPath("userData"), "test.db"));
 console.log(dbPath);
-console.log({IS_DEV})
+console.log({ IS_DEV });
 
 let db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
