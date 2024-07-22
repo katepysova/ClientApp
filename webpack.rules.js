@@ -25,6 +25,15 @@ module.exports = [
     type: "asset/resource"
   },
   {
+    test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+    loader: "url-loader",
+    options: {
+      limit: 1032000,
+      exclude: /node-modules/,
+      mimetype: "application/font-woff"
+    }
+  },
+  {
     test: /\.jsx?$/,
     use: {
       loader: "babel-loader",

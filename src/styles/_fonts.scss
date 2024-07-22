@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "ING Me";
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local(""),
+    url("./fonts/INGMe/Regular/INGMeWeb-Regular.woff2") format("woff2"),
+    url("./fonts/INGMe/Regular/INGMeWeb-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "ING Me";
+  font-style: normal;
+  font-weight: 600;
+  src:
+    local(""),
+    url("./fonts/INGMe/Bold/INGMeWeb-Bold.woff2") format("woff2"),
+    url("./fonts/INGMe/Bold/INGMeWeb-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "ING Me";
+  font-style: italic;
+  font-weight: 400;
+  src:
+    local(""),
+    url("./fonts/INGMe/Italic/INGMeWeb-Italic.woff2") format("woff2"),
+    url("./fonts/INGMe/Italic/INGMeWeb-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "ING Me";
+  font-style: italic;
+  font-weight: 600;
+  src:
+    local(""),
+    url("./fonts/INGMe/BoldItalic/INGMeWeb-BoldItalic.woff2") format("woff2"),
+    url("./fonts/INGMe/BoldItalic/INGMeWeb-BoldItalic.woff") format("woff");
+}

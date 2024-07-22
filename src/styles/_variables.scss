@@ -1,6 +1,30 @@
-$color-white: #f4f4f4;
-$color-black: #0a0f5a;
-$color-bg: #f0f3f7;
+// https://brand.ing.com/guidelines/guide/61d25d6f-c26d-41d2-bdff-0d5f4547f1fc/page/c9b18ac3-8c71-484c-ad91-43e05e7d6fae
+
+// Primary
+$color-orange: #ff6200;
+$color-white: #fff;
+
+// Secondary colours
+$color-indigo: #525199;
+$color-sky: #559bd1;
+$color-fuchsia: #ab0066;
+$color-lime: #d0d93c;
+
+// Grey tints
+$color-black-80: #333;
+$color-mid-grey: #696969;
+$color-black-8: #f0f0f0;
+$color-light-grey: #a8a8a8;
+
+// Colour tints
+$color-sky-tint-4: #eff6fb;
+
+// ING Plus & ING Minus
+$color-plus: #349651;
+$color-minus: #d70000;
+
+// Others
+$color-bg: $color-sky-tint-4;
 $bp-extra-large: 1350px;
 $bp-large: 1200px;
 $bp-medium: 990px;
@@ -8,4 +32,6 @@ $bp-medium-small: 800px;
 $bp-small: 650px;
 $bp-extra-small: 450px;
 $header-height-desktop: 84px;
-$box-shadow: rgb(100 100 111 / 20%) 0 7px 29px 0;
+$box-shadow:
+  rgb(27 31 35 / 4%) 0 1px 0,
+  rgb(255 255 255 / 25%) 0 1px 0 inset;

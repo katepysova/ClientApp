@@ -1,0 +1,23 @@
+.task-card {
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: rgb(0 0 0 / 5%) 0 0 0 1px;
+
+  &__header {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__icon {
+    img {
+      width: 64px;
+    }
+  }
+
+  &__name {
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
