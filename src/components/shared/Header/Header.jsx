@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "@images/logo.png";
-import icons from "@components/shared/Icon/icons.js";
-import Icon from "@components/shared/Icon/Icon.jsx";
+import logo from "@images/logo.svg";
 import { routes } from "@constants/routes.js";
 
 import "./Header.scss";
 
 export default function Header() {
+  const [lastUpdate, setLastUpdate] = useState("-");
+
+  const getStatusUpdate = async () => {
+    try {
+      const data = await window.electron.fetchData(
+        `SELECT 
+                MAX(Interval.start_time) as lastUpdate
+                FROM Interval`
+      );
+      const { lastUpdate } = data[0];
+      setLastUpdate(lastUpdate);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getStatusUpdate();
+  }, []);
+
   return (
     <header className="header">
       <div className="header__container container">
@@ -15,12 +33,9 @@ export default function Header() {
           <Link to={routes.index}>
             <img className="header__logo" src={logo} alt="logo" />
           </Link>
-          <h3 className="title">
-            <span>Laptop Energy</span>
-            <Icon symbol={icons.leaf} />
-          </h3>
+          <h3 className="header__title-text">Laptop Energy</h3>
         </div>
-        <h4 className="update-status">Last updated: today</h4>
+        <p className="header__update-status">Last updated: {lastUpdate}</p>
       </div>
     </header>
   );

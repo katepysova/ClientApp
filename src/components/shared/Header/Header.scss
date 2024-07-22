@@ -1,9 +1,10 @@
 @import "src/styles/variables";
+@import "src/styles/typography";
 
 .header {
   height: $header-height-desktop;
   background-color: $color-white;
-  box-shadow: $box-shadow;
+  box-shadow: $box-shadow-header;
   position: fixed;
   top: 0;
   left: 0;
@@ -23,22 +24,18 @@
   &__title {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 
-    .title {
-      font-size: 18px;
-      font-weight: normal;
-      display: flex;
-      gap: 4px;
-      align-items: center;
+    &-text {
+      @include font19BoldMixin;
     }
   }
 
   &__logo {
-    width: 60px;
+    width: 40px;
   }
-}
 
-.update-status {
-  font-weight: normal;
+  &__update-status {
+    @include font14BoldMixin;
+  }
 }

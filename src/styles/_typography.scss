@@ -1,13 +1,83 @@
+// https://webdemos.feature-testing.ing.net/p00019-ing-web-v2/fundamentals/design/typography/index.html
 @import "./variables";
 
-.heading-secondary {
-  font-size: 36px;
-  line-height: 54px;
+@mixin font14Mixin() {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@mixin font14BoldMixin() {
+  @include font14Mixin;
+
   font-weight: 600;
 }
 
-.heading-tertiary {
+@mixin font16Mixin() {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@mixin font19Mixin() {
+  font-size: 19px;
+  line-height: 28px;
+}
+
+@mixin font19BoldMixin() {
+  @include font19Mixin;
+
+  font-weight: bold;
+}
+
+@mixin font24Mixin() {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+@mixin font24BoldMixin() {
+  @include font24Mixin;
+
+  font-weight: 600;
+}
+
+@mixin font28Mixin() {
   font-size: 28px;
-  line-height: 42px;
-  font-weight: 700;
+  line-height: 36px;
+}
+
+@mixin font28BoldMixin() {
+  @include font28Mixin;
+
+  font-weight: 600;
+}
+
+@mixin font32Mixin() {
+  font-size: 32px;
+  line-height: 40px;
+}
+
+@mixin font32BoldMixin() {
+  @include font32Mixin;
+
+  font-weight: 600;
+}
+
+@mixin font36Mixin() {
+  font-size: 36px;
+  line-height: 48px;
+}
+
+@mixin font36BoldMixin() {
+  @include font36Mixin;
+
+  font-weight: 600;
+}
+
+.heading-primary {
+  @include font36BoldMixin;
+
+  color: $color-orange;
+}
+
+.heading-tertiary {
+  @include font28BoldMixin;
 }

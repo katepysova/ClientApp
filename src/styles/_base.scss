@@ -1,5 +1,7 @@
 @import "./variables";
 @import "./fonts";
+@import "./typography";
+@import "utils";
 
 * {
   &,
@@ -10,18 +12,22 @@
     box-sizing: border-box;
     color: inherit;
     font-family: inherit;
+    letter-spacing: inherit;
+    font-weight: normal;
   }
 }
 
 html {
-  font-size: 16px;
   scroll-behavior: smooth;
+
+  @include font16Mixin;
 }
 
 body {
   background-color: $color-bg;
   color: $color-black-80;
   font-family: "ING Me", Arial, sans-serif;
+  letter-spacing: 0;
 }
 
 html,
@@ -58,10 +64,11 @@ button {
 
 .container {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding-left: 160px;
-  padding-right: 160px;
+  padding: 84px 20px 40px;
+
+  /*
 
   @media only screen and (max-width: $bp-extra-large) {
     padding-left: 80px;
@@ -76,5 +83,5 @@ button {
   @media only screen and (max-width: $bp-small) {
     padding-left: 24px;
     padding-right: 24px;
-  }
+  } */
 }

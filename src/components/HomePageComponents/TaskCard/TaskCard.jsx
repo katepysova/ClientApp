@@ -18,8 +18,9 @@ function TaskCard({ task }) {
         <div className="task-card__icon">{renderIcon(task.icon)}</div>
         <h4 className="task-card__name">{task.task_name}</h4>
       </div>
-
-      <div>Energy Consumption: {task.energy_consumption}</div>
+      <div className="task-card__body">
+        <div>Energy Consumption: {task.energy_consumption} Joules</div>
+      </div>
     </div>
   );
 }

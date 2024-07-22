@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Card from "@components/shared/Card/Card.jsx";
-import TaskCard from "@components/TaskCard/TaskCard.jsx";
+import TaskCard from "@components/HomePageComponents/TaskCard/TaskCard.jsx";
 import "./Home.scss";
 
 export default function Home() {
@@ -23,7 +23,6 @@ export default function Home() {
                 
         `
       );
-      console.log({ taskConsumptionData });
       setTaskConsumptions(taskConsumptionData);
     };
 
@@ -33,9 +32,10 @@ export default function Home() {
   return (
     <div className="home-page">
       <div className="home-page__container container">
+        <h1 className="heading-primary u-margin-button-56">Carbon Footprint of the Laptop </h1>
         <Card>
-          <h3 className="heading-tertiary">Task Consumptions</h3>
           <div className="list">
+            <h3 className="heading-tertiary">Top 10 Carbon Emitting Applications</h3>
             {taskConsumptions.map((consumption) => (
               <TaskCard key={consumption?.task_name} task={consumption} />
             ))}
