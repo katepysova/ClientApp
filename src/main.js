@@ -1,15 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const sqlite3 = require("sqlite3").verbose();
 
-const IS_DEV = process.env.NODE_ENV === "development";
-
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
 const dbPath = "/Library/Application Support/PowerObserver/energy_measurements.db";
-console.log(dbPath);
-console.log({ IS_DEV });
 
 let db = new sqlite3.Database(dbPath, (err) => {
   if (err) {

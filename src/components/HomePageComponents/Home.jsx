@@ -34,8 +34,10 @@ export default function Home() {
       <div className="home-page__container container">
         <h1 className="heading-primary u-margin-button-56">Carbon Footprint of the Laptop </h1>
         <Card>
+          <h3 className="heading-tertiary u-margin-button-40">
+            Top 10 Carbon Emitting Applications
+          </h3>
           <div className="list">
-            <h3 className="heading-tertiary">Top 10 Carbon Emitting Applications</h3>
             {taskConsumptions.map((consumption) => (
               <TaskCard key={consumption?.task_name} task={consumption} />
             ))}

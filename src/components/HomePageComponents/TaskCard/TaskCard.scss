@@ -1,7 +1,7 @@
 @import "../../../styles/typography";
 
 .task-card {
-  padding: 8px 16px;
+  padding: 24px 16px;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 5%) 0 0 0 1px;
   display: flex;
@@ -26,5 +26,30 @@
   }
 
   &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__label {
+    @include font16BoldMixin;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  &__list-item {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    gap: 8px;
+
+    svg {
+      width: 64px;
+      height: 64px;
+    }
   }
 }

@@ -17,6 +17,12 @@
   line-height: 24px;
 }
 
+@mixin font16BoldMixin() {
+  @include font16Mixin;
+
+  font-weight: 600;
+}
+
 @mixin font19Mixin() {
   font-size: 19px;
   line-height: 28px;
