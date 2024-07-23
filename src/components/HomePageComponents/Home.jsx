@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from "react";
 
 import Card from "@components/shared/Card/Card.jsx";
+import Loader from "@components/shared/Loader/Loader.jsx";
 import TaskCard from "@components/HomePageComponents/TaskCard/TaskCard.jsx";
+
 import "./Home.scss";
 
 export default function Home() {
   const [taskConsumptions, setTaskConsumptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
       const taskConsumptionData = await window.electron.fetchData(
-        `SELECT
-                TaskConsumption.task_name, 
+        `SELECT TaskConsumption.task_name,
                 SUM(TaskConsumption.energy_consumption) as energy_consumption,
                 Task.icon
-                FROM TaskConsumption
-                JOIN Task
-                ON TaskConsumption.task_name = Task.task_name
-                GROUP BY Task.task_name
-                ORDER BY energy_consumption DESC
-                LIMIT 10;
-                
+         FROM TaskConsumption
+                  JOIN Task
+                       ON TaskConsumption.task_name = Task.task_name
+         GROUP BY Task.task_name
+         ORDER BY energy_consumption DESC LIMIT 10;
+
         `
       );
       setTaskConsumptions(taskConsumptionData);
-    };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -33,16 +41,20 @@ export default function Home() {
     <div className="home-page">
       <div className="home-page__container container">
         <h1 className="heading-primary u-margin-button-56">Carbon Footprint of the Laptop </h1>
-        <Card>
-          <h3 className="heading-tertiary u-margin-button-40">
-            Top 10 Carbon Emitting Applications
-          </h3>
-          <div className="list">
-            {taskConsumptions.map((consumption) => (
-              <TaskCard key={consumption?.task_name} task={consumption} />
-            ))}
-          </div>
-        </Card>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Card>
+            <h3 className="heading-tertiary u-margin-button-40">
+              Top 10 Carbon Emitting Applications
+            </h3>
+            <div className="list">
+              {taskConsumptions.map((consumption) => (
+                <TaskCard key={consumption?.task_name} task={consumption} />
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
     </div>
   );
