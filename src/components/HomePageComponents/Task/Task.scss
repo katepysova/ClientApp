@@ -1,0 +1,104 @@
+@import "src/styles/variables";
+@import "src/styles/typography";
+
+.task {
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 5%) 0 0 0 1px;
+  position: relative;
+
+  &__header {
+    position: relative;
+    display: flex;
+    padding-left: 32px;
+
+    &::before {
+      @include font14Mixin;
+
+      content: counter(list-item);
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 10px;
+      color: $color-mid-grey;
+    }
+  }
+
+  &__title {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    img {
+      width: 32px;
+    }
+
+    span {
+      @include font16BoldMixin;
+    }
+  }
+
+  &__info {
+    &-value {
+      @include font16BoldMixin;
+
+      font-style: italic;
+    }
+  }
+
+  &__extra {
+    background-color: $color-black-8;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+}
+
+.spoiler-header {
+  border: 0;
+  background-color: transparent;
+  font-size: inherit;
+  text-align: left;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
+  width: 100%;
+}
+
+.spoiler-body {
+  height: 0;
+  opacity: 0;
+  max-height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: all 0.3s;
+  padding: 0 8px;
+}
+
+.spoiler-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  transition: all 0.3s;
+
+  svg {
+    color: $color-orange;
+  }
+}
+
+.spoiler {
+  &.open {
+    .spoiler-body {
+      max-height: 150px;
+      height: 100%;
+      opacity: 1;
+      visibility: visible;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .spoiler-icon {
+      transform: translateY(-50%) rotate(-540deg);
+    }
+  }
+}

@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 import Card from "@components/shared/Card/Card.jsx";
-import Loader from "@components/shared/Loader/Loader.jsx";
-import TaskCard from "@components/HomePageComponents/TaskCard/TaskCard.jsx";
+import Task from "@components/HomePageComponents/Task/Task.jsx";
+import List from "@components/shared/List/List.jsx";
 
 import "./Home.scss";
 
 export default function Home() {
-  const [taskConsumptions, setTaskConsumptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [tasksConsumptions, setTaskConsumptions] = useState([]);
 
-  const fetchData = async () => {
+  const getTasksConsumptionData = async () => {
     try {
-      setIsLoading(true);
-      const taskConsumptionData = await window.electron.fetchData(
+      const tasksConsumptionData = await window.electron.fetchData(
         `SELECT TaskConsumption.task_name,
                 SUM(TaskConsumption.energy_consumption) as energy_consumption,
                 Task.icon
@@ -21,40 +19,34 @@ export default function Home() {
                   JOIN Task
                        ON TaskConsumption.task_name = Task.task_name
          GROUP BY Task.task_name
-         ORDER BY energy_consumption DESC LIMIT 10;
+         ORDER BY energy_consumption DESC LIMIT 9;
 
         `
       );
-      setTaskConsumptions(taskConsumptionData);
+      setTaskConsumptions(tasksConsumptionData);
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    getTasksConsumptionData();
   }, []);
 
   return (
     <div className="home-page">
       <div className="home-page__container container">
-        <h1 className="heading-primary u-margin-button-56">Carbon Footprint of the Laptop </h1>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Card>
-            <h3 className="heading-tertiary u-margin-button-40">
-              Top 10 Carbon Emitting Applications
-            </h3>
-            <div className="list">
-              {taskConsumptions.map((consumption) => (
-                <TaskCard key={consumption?.task_name} task={consumption} />
+        <section className="home-page__main grid">
+          <Card className="column--1" title="Your rating" />
+          <Card className="column--2" title="Top 9 Carbon Emitting Applications">
+            <List>
+              {tasksConsumptions.map((task) => (
+                <Task key={task.task_name} task={task} />
               ))}
-            </div>
+            </List>
           </Card>
-        )}
+          <Card className="column--3" title="Diagram" />
+        </section>
       </div>
     </div>
   );

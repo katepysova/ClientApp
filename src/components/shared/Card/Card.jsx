@@ -1,14 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import cn from "classnames";
 
 import "./Card.scss";
 
-function Card({ children }) {
-  return <div className="card">{children}</div>;
+function Card({ children, className, title }) {
+  return (
+    <div className={cn("card", className)}>
+      {title && <h3 className="card__title heading-tertiary">{title}</h3>}
+      {children}
+    </div>
+  );
 }
 
 Card.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.any,
+  className: PropTypes.string,
+  title: PropTypes.string
 };
 
 export default Card;

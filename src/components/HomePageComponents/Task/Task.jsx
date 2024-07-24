@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import cn from "classnames";
 import PropTypes from "prop-types";
 import emptyImage from "@images/empty_image.png";
 import Icon from "@components/shared/Icon/Icon.jsx";
 import icons from "@components/shared/Icon/icons.js";
 import { convertJoulesToGrams, formatNumberToPrecision } from "@common/service.js";
-import "./TaskCard.scss";
+import "./Task.scss";
 
 const renderIcon = (iconData) => {
   if (iconData && iconData.length > 0) {
@@ -14,8 +15,10 @@ const renderIcon = (iconData) => {
   return <img src={emptyImage} alt="Task Icon" />;
 };
 
-function TaskCard({ task }) {
+function Task({ task }) {
+  const [isSpoilerOpen, toggleSpoilerOpen] = useState(false);
   const energyConsumptionInGrams = convertJoulesToGrams(task.energy_consumption);
+  // eslint-disable-next-line no-unused-vars
   const commonItems = [
     {
       icon: icons.coffee,
@@ -55,46 +58,43 @@ function TaskCard({ task }) {
     }
   ];
 
+  const handleClick = () => {
+    toggleSpoilerOpen(!isSpoilerOpen);
+  };
+
   return (
-    <div className="task-card">
-      <div className="task-card__header">
-        <div className="task-card__icon">{renderIcon(task.icon)}</div>
-        <h4 className="task-card__name">{task.task_name}</h4>
+    <li className={cn("task spoiler", { open: isSpoilerOpen })}>
+      <button className="task__header spoiler-header" onClick={handleClick}>
+        <div className="task__title">
+          {renderIcon(task.icon)}
+          <span>{task.task_name}</span>
+        </div>
+        <span className="spoiler-icon">
+          <Icon symbol={icons.arrowDown}></Icon>
+        </span>
+      </button>
+      <div className="spoiler-body">
+        <div className="task__extra">
+          <div className="task__info">
+            <span className="task__info-label">Energy Consumption: </span>
+            <span className="task__info-value">
+              {formatNumberToPrecision(task.energy_consumption, 6)} Joules
+            </span>
+          </div>
+          <div className="task__info">
+            <span className="task__info-label">Equivalent in grams: </span>
+            <span className="task__info-value">
+              {formatNumberToPrecision(energyConsumptionInGrams)} Grams
+            </span>
+          </div>
+        </div>
       </div>
-      <div className="task-card__body">
-        <p>
-          <span className="task-card__label">Energy Consumption: </span>
-          <span className="task-card__value">
-            {formatNumberToPrecision(task.energy_consumption, 6)} joules
-          </span>
-        </p>
-        <p>
-          <span className="task-card__label">Equivalent in grams: </span>
-          <span className="task-card__value">
-            {formatNumberToPrecision(energyConsumptionInGrams)} grams
-          </span>
-        </p>
-        <p>
-          <span className="task-card__label">The Carbon Footprint of Common Items: </span>
-        </p>
-        <ul className="task-card__list">
-          {commonItems.map((item) => (
-            <li className="task-card__list-item" key={item.title}>
-              <Icon symbol={item.icon} />
-              <div>
-                <p className="task-card__label">{item.title}</p>
-                <p>{item.carbonValue(task.energy_consumption)}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    </li>
   );
 }
 
-TaskCard.propTypes = {
+Task.propTypes = {
   task: PropTypes.object.isRequired
 };
 
-export default TaskCard;
+export default Task;
