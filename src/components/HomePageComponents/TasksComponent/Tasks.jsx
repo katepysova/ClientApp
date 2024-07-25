@@ -54,13 +54,14 @@ function Tasks({ className }) {
       baseQuery += `\n GROUP BY Task.task_name
          ORDER BY energy_consumption DESC LIMIT 9;`;
 
-      console.log(baseQuery);
       const tasksConsumptionData = await window.electron.fetchData(baseQuery);
       setTaskConsumptions(tasksConsumptionData);
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 
