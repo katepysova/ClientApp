@@ -1,0 +1,13 @@
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 50%;
+  }
+}

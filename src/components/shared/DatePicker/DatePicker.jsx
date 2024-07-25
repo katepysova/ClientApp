@@ -22,6 +22,8 @@ function CustomDatePicker({ placeholder = "Please select a date", label = "Date"
         maxDate={new Date()}
         dateFormat="dd/MM/YYYY"
         placeholderText={placeholder}
+        isClearable={true}
+        clearIcon={<Icon symbol={icons.calendar} />}
         {...props}
       />
     </div>
