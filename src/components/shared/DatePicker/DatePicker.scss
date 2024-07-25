@@ -1,0 +1,54 @@
+@import "src/styles/typography";
+@import "src/styles/variables";
+
+.custom-datepicker {
+  position: relative;
+
+  &__label {
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .react-datepicker-wrapper {
+    width: 100%;
+
+    .react-datepicker__input-container {
+      width: 100%;
+      position: relative;
+
+      svg {
+        position: absolute;
+        right: 6px;
+        width: 24px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      input {
+        @include font16Mixin;
+
+        width: 100%;
+        padding: 8px 36px 8px 12px;
+        border-radius: 4px;
+        border: 1px solid $color-black-80;
+
+        &:focus,
+        &:active,
+        &.react-datepicker-ignore-onclickoutside {
+          border-color: $color-sky;
+          box-shadow: $color-sky 0 0 4px;
+          outline: $color-sky;
+        }
+      }
+    }
+  }
+}
+
+.react-datepicker__header {
+  background-color: $color-white;
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {
+  fill: $color-white;
+  color: $color-white;
+}

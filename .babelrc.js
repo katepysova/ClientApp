@@ -13,6 +13,7 @@ module.exports= {"presets": [
 
     ],
     "plugins": [
+        '@babel/plugin-transform-modules-commonjs',
         ["module-resolver", {
             "root": ["./src"],
             "alias": {
