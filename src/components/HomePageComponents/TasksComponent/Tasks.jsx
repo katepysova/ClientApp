@@ -6,10 +6,10 @@ import Card from "@components/shared/Card/Card.jsx";
 import List from "@components/HomePageComponents/TasksComponent/List/List.jsx";
 import Task from "@components/HomePageComponents/TasksComponent/Task/Task.jsx";
 import Loader from "@components/shared/Loader/Loader.jsx";
+import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import moment from "moment/moment";
 
 import "./Tasks.scss";
-import EmptyState from "../../shared/EmptyState/EmptyState.jsx";
 
 function Tasks({ className }) {
   const [tasksConsumptions, setTaskConsumptions] = useState([]);
@@ -22,7 +22,7 @@ function Tasks({ className }) {
       if (!date) {
         return null;
       }
-      const format = "yyyy-MM-DD";
+      const format = "YYYY-MM-DD";
       if (isEndDate) {
         return `${moment(date).add(1, "day").format(format)}`;
       }
@@ -77,9 +77,7 @@ function Tasks({ className }) {
             label="Start Date"
             selectsStart
             selected={startDate}
-            onChange={(date) => {
-              setStartDate(date);
-            }}
+            onChange={(date) => setStartDate(date)}
             startDate={startDate}
           />
           <CustomDatePicker
