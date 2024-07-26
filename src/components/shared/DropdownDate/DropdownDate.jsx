@@ -17,7 +17,10 @@ function CustomDropdownDate({ year, month, day, onDayChange, onMonthChange, onYe
   };
 
   const generateMonths = () => {
-    return monthNames.map((name, index) => ({ value: index + 1, label: name }));
+    if (year?.value) {
+      return monthNames.map((name, index) => ({ value: index + 1, label: name }));
+    }
+    return [];
   };
 
   const getDaysInMonth = (year, month) => {

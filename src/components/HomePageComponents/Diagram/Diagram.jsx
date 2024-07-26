@@ -34,10 +34,16 @@ function Diagram({ className }) {
 
   const handleYearChange = (selectedOption) => {
     setYear(selectedOption);
+    if (!selectedOption) {
+      handleMonthChange(null);
+    }
   };
 
   const handleMonthChange = (selectedOption) => {
     setMonth(selectedOption);
+    if (!selectedOption) {
+      setDay(null);
+    }
   };
 
   const handleDayChange = (selectedOption) => {
@@ -58,7 +64,6 @@ function Diagram({ className }) {
   const getTotalConsumption = async () => {
     try {
       const formattedData = formatValues(year, month, day);
-      console.log(formattedData);
       setIsLoading(true);
       let query = `
         SELECT SUM(Interval.total_energy_consumption) as total_energy_consumption,
@@ -72,11 +77,8 @@ function Diagram({ className }) {
       } else if (formattedData.year) {
         query += `\n WHERE strftime('%Y', date) = '${formattedData.year}'`;
       }
-
       query += `\n GROUP BY date`;
-      console.log(query);
       const totalConsumptionData = await window.electron.fetchData(query);
-      console.log({ totalConsumptionData });
       setTotalConsumption(totalConsumptionData);
     } catch (error) {
       console.error(error);
