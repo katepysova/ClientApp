@@ -1,23 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Select from "@components/shared/Select/Select.jsx";
+import { monthNames } from "@constants/general.js";
 
 import "./DropdownDate.scss";
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
 
 function CustomDropdownDate({ year, month, day, onDayChange, onMonthChange, onYearChange }) {
   const currentYear = new Date().getFullYear();

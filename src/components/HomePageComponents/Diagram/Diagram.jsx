@@ -17,23 +17,9 @@ import Card from "@components/shared/Card/Card.jsx";
 import Loader from "@components/shared/Loader/Loader.jsx";
 import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import CustomDropdownDate from "@components/shared/DropdownDate/DropdownDate.jsx";
+import { monthNames } from "@constants/general.js";
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement, BarController);
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
 
 function Diagram({ className }) {
   const [totalConsumption, setTotalConsumption] = useState([]);
@@ -59,10 +45,12 @@ function Diagram({ className }) {
   };
 
   const formatValues = (year, month, day) => {
+    month = month?.value ? ("0" + month.value).slice(-2) : null;
+    day = day?.value ? ("0" + day.value).slice(-2) : null;
     const data = {
       year: year?.value || null,
-      month: month?.value || null,
-      day: day?.value || null
+      month,
+      day
     };
     return data;
   };
@@ -70,6 +58,7 @@ function Diagram({ className }) {
   const getTotalConsumption = async () => {
     try {
       const formattedData = formatValues(year, month, day);
+      console.log(formattedData);
       setIsLoading(true);
       let query = `
         SELECT SUM(Interval.total_energy_consumption) as total_energy_consumption,
@@ -77,9 +66,9 @@ function Diagram({ className }) {
             FROM Interval
     `;
       if (formattedData.year && formattedData.month && formattedData.day) {
-        query += `\n WHERE strftime('%Y', date) = '${formattedData.year}'`;
+        query += `\n WHERE date = '${formattedData.year}-${formattedData.month}-${formattedData.day}'`;
       } else if (formattedData.year && formattedData.month) {
-        query += `\n WHERE strftime('%Y', date) = '${formattedData.year}' AND strftime('%m', date) = '${formattedData.month}`;
+        query += `\n WHERE strftime('%Y', date) = '${formattedData.year}' AND strftime('%m', date) = '${formattedData.month}'`;
       } else if (formattedData.year) {
         query += `\n WHERE strftime('%Y', date) = '${formattedData.year}'`;
       }
