@@ -71,6 +71,7 @@
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.0",
+    "react-select": "^5.8.0",
     "sqlite3": "^5.1.7"
   }
 }

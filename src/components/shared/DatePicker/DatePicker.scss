@@ -32,6 +32,7 @@
         border-radius: 4px;
         border: 1px solid $color-black-80;
 
+        &:hover,
         &:focus,
         &:active,
         &.react-datepicker-ignore-onclickoutside {
@@ -39,6 +40,10 @@
           box-shadow: $color-sky 0 0 4px;
           outline: $color-sky;
         }
+      }
+
+      &::placeholder {
+        color: $color-mid-grey;
       }
     }
   }

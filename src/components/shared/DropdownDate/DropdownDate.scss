@@ -1,0 +1,9 @@
+.dropdown-date {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}

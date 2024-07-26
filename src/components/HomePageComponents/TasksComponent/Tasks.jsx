@@ -18,25 +18,23 @@ function Tasks({ className }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const getTasksConsumptionData = async () => {
-    const formatDateForQuery = (date, isEndDate) => {
+    const formatDateForQuery = (date) => {
       if (!date) {
         return null;
       }
       const format = "YYYY-MM-DD";
-      if (isEndDate) {
-        return `${moment(date).add(1, "day").format(format)}`;
-      }
       return `${moment(date).format(format)}`;
     };
 
     try {
       setIsLoading(true);
       const formattedStartDate = formatDateForQuery(startDate);
-      const formattedEndDate = formatDateForQuery(endDate, true);
+      const formattedEndDate = formatDateForQuery(endDate);
 
       let baseQuery = `
         SELECT 
-        TaskConsumption.task_name, SUM(TaskConsumption.energy_consumption) as energy_consumption, Task.icon
+        TaskConsumption.task_name, SUM(TaskConsumption.energy_consumption) as energy_consumption, Task.icon,
+        DATE(Interval.start_time) as date
         FROM TaskConsumption
         JOIN Task
         ON TaskConsumption.task_name = Task.task_name
@@ -44,11 +42,11 @@ function Tasks({ className }) {
         ON TaskConsumption.interval_id = Interval.id`;
 
       if (formattedStartDate && formattedEndDate) {
-        baseQuery += `\n WHERE Interval.start_time BETWEEN '${formattedStartDate}' AND '${formattedEndDate}'`;
+        baseQuery += `\n WHERE date BETWEEN '${formattedStartDate}' AND '${formattedEndDate}'`;
       } else if (formattedStartDate) {
-        baseQuery += `\n WHERE Interval.start_time >= '${formattedStartDate}'`;
+        baseQuery += `\n WHERE date >= '${formattedStartDate}'`;
       } else if (formattedEndDate) {
-        baseQuery += `\n WHERE Interval.start_time <'${formattedEndDate}'`;
+        baseQuery += `\n WHERE date <'${formattedEndDate}'`;
       }
 
       baseQuery += `\n GROUP BY Task.task_name
