@@ -17,6 +17,7 @@ import Card from "@components/shared/Card/Card.jsx";
 import Loader from "@components/shared/Loader/Loader.jsx";
 import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import CustomDropdownDate from "@components/shared/DropdownDate/DropdownDate.jsx";
+import Button from "@components/shared/Button/Button.jsx";
 import { monthNames } from "@constants/general.js";
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement, BarController);
@@ -59,6 +60,12 @@ function Diagram({ className }) {
       day
     };
     return data;
+  };
+
+  const handleResetButtonClick = () => {
+    setYear({ value: currentYear, label: currentYear });
+    setMonth({ value: currentMonth + 1, label: monthNames[currentMonth] });
+    setDay({ value: currentDay, label: currentDay });
   };
 
   const getTotalConsumption = async () => {
@@ -134,6 +141,7 @@ function Diagram({ className }) {
           onDayChange={handleDayChange}
           onYearChange={handleYearChange}
         />
+        <Button onClick={handleResetButtonClick}>Reset to current date</Button>
         {isLoading && <Loader />}
         {totalConsumption.length === 0 && !isLoading && <EmptyState />}
         {totalConsumption.length > 0 && !isLoading && <Bar data={data} options={options} />}

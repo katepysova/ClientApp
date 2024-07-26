@@ -1,0 +1,35 @@
+@import "src/styles/variables";
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  transition: all 0.1s;
+  border: none;
+  text-transform: capitalize;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled),
+  &:active:not(:disabled) {
+    box-shadow:
+      0 0 8px 0 rgb(0 0 0 / 12%),
+      0 8px 8px 0 rgb(0 0 0 / 24%);
+  }
+
+  &--primary {
+    color: $color-white;
+    background-color: $color-orange;
+
+    &:disabled {
+      background-color: $color-light-grey;
+    }
+  }
+}
