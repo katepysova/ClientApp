@@ -1,11 +1,20 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import cn from "classnames";
 import Select from "@components/shared/Select/Select.jsx";
-import { monthNames } from "@constants/general.js";
+import { monthNames, getDaysInMonth } from "@constants/general.js";
 
 import "./DropdownDate.scss";
 
-function CustomDropdownDate({ year, month, day, onDayChange, onMonthChange, onYearChange }) {
+function CustomDropdownDate({
+  year,
+  month,
+  day,
+  onDayChange,
+  onMonthChange,
+  onYearChange,
+  className
+}) {
   const currentYear = new Date().getFullYear();
 
   const generateYears = () => {
@@ -21,10 +30,6 @@ function CustomDropdownDate({ year, month, day, onDayChange, onMonthChange, onYe
       return monthNames.map((name, index) => ({ value: index + 1, label: name }));
     }
     return [];
-  };
-
-  const getDaysInMonth = (year, month) => {
-    return new Date(year, month, 0).getDate();
   };
 
   const generateDays = () => {
@@ -45,7 +50,7 @@ function CustomDropdownDate({ year, month, day, onDayChange, onMonthChange, onYe
   }, [year, month]);
 
   return (
-    <div className="dropdown-date">
+    <div className={cn("dropdown-date", className)}>
       <Select
         value={year}
         onChange={onYearChange}
@@ -77,7 +82,8 @@ CustomDropdownDate.propTypes = {
   day: PropTypes.object,
   onDayChange: PropTypes.func.isRequired,
   onMonthChange: PropTypes.func.isRequired,
-  onYearChange: PropTypes.func.isRequired
+  onYearChange: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
 
 export default CustomDropdownDate;

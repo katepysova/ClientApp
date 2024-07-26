@@ -5,7 +5,7 @@ import cn from "classnames";
 import "./Button.scss";
 
 function Button({ children, className, ...props }) {
-  const currentClassName = cn("btn btn--primary", className);
+  const currentClassName = cn("btn", className);
   return (
     <button className={currentClassName} {...props}>
       {children}

@@ -32,4 +32,13 @@
       background-color: $color-light-grey;
     }
   }
+
+  &--secondary {
+    color: $color-white;
+    background-color: $color-sky;
+
+    &:disabled {
+      background-color: $color-light-grey;
+    }
+  }
 }

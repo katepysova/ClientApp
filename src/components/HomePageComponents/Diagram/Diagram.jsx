@@ -18,11 +18,14 @@ import Loader from "@components/shared/Loader/Loader.jsx";
 import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import CustomDropdownDate from "@components/shared/DropdownDate/DropdownDate.jsx";
 import Button from "@components/shared/Button/Button.jsx";
+
 import { monthNames } from "@constants/general.js";
+
+import "./Diagram.scss";
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement, BarController);
 
-function Diagram({ className }) {
+function Diagram({ className, handleSeeTopButtonClick }) {
   const [totalConsumption, setTotalConsumption] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,12 +57,12 @@ function Diagram({ className }) {
   const formatValues = (year, month, day) => {
     month = month?.value ? ("0" + month.value).slice(-2) : null;
     day = day?.value ? ("0" + day.value).slice(-2) : null;
-    const data = {
+    const date = {
       year: year?.value || null,
       month,
       day
     };
-    return data;
+    return date;
   };
 
   const handleResetButtonClick = () => {
@@ -108,24 +111,42 @@ function Diagram({ className }) {
         backgroundColor: "rgba(171, 0, 102, 0.75)",
         borderColor: "rgba(171, 0, 102, 1)",
         borderWidth: 1,
-        data: totalConsumption.map((item) => item?.total_energy_consumption)
+        data: totalConsumption.map((item) => item?.total_energy_consumption),
+        font: 16
       }
     ]
   };
 
   const options = {
+    plugins: {
+      title: {
+        font: {
+          size: 24,
+          style: "italic",
+          family: "Helvetica Neue"
+        }
+      }
+    },
     scales: {
       x: {
         title: {
           display: true,
-          text: "Date" // Name of y-axis
+          text: "Date", // Name of y-axis
+          font: {
+            size: 16,
+            weight: "bold"
+          }
         }
       },
       y: {
         beginAtZero: true,
         title: {
           display: true,
-          text: "Total Consumption (Joules)" // Name of y-axis
+          text: "Total Consumption (Joules)", // Name of y-axis
+          font: {
+            size: 16,
+            weight: "bold"
+          }
         }
       }
     }
@@ -134,6 +155,7 @@ function Diagram({ className }) {
     <div className={cn("diagram", className)}>
       <Card title="Total Energy Consumption">
         <CustomDropdownDate
+          className={"diagram__dates"}
           year={year}
           month={month}
           day={day}
@@ -141,7 +163,17 @@ function Diagram({ className }) {
           onDayChange={handleDayChange}
           onYearChange={handleYearChange}
         />
-        <Button onClick={handleResetButtonClick}>Reset to current date</Button>
+        <div className="diagram__buttons">
+          <Button className="btn--primary" onClick={handleResetButtonClick}>
+            Reset to current date
+          </Button>
+          <Button
+            className="btn--secondary"
+            onClick={() => handleSeeTopButtonClick(formatValues(year, month, day))}
+          >
+            See top 9 apps
+          </Button>
+        </div>
         {isLoading && <Loader />}
         {totalConsumption.length === 0 && !isLoading && <EmptyState />}
         {totalConsumption.length > 0 && !isLoading && <Bar data={data} options={options} />}
@@ -151,6 +183,7 @@ function Diagram({ className }) {
 }
 
 Diagram.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  handleSeeTopButtonClick: PropTypes.func
 };
 export default Diagram;

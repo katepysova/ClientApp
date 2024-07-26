@@ -19,8 +19,7 @@ function CustomDatePicker({ placeholder = "Select a date", label = "Date", ...pr
         onKeyDown={(e) => {
           e.preventDefault();
         }}
-        maxDate={new Date()}
-        dateFormat="dd/MM/YYYY"
+        dateFormat="dd/MM/yyyy" // See: https://github.com/Hacker0x01/react-datepicker/issues/1600#issuecomment-471239698
         placeholderText={placeholder}
         isClearable={true}
         clearIcon={<Icon symbol={icons.calendar} />}
