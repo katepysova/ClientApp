@@ -8,7 +8,7 @@ import icons from "@components/shared/Icon/icons.js";
 
 import "./DatePicker.scss";
 
-function CustomDatePicker({ placeholder = "Select a date", label = "Date", ...props }) {
+function CustomDatePicker({ placeholder = "Select date", label = "Date", ...props }) {
   return (
     <div className="custom-datepicker">
       {label && <span className="custom-datepicker__label">{label}</span>}

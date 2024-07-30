@@ -171,7 +171,7 @@ function Diagram({ className, handleSeeTopButtonClick }) {
             className="btn--secondary"
             onClick={() => handleSeeTopButtonClick(formatValues(year, month, day))}
           >
-            See top 9 apps
+            See top apps
           </Button>
         </div>
         {isLoading && <Loader />}
