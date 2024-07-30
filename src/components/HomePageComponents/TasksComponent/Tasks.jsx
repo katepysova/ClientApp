@@ -14,8 +14,8 @@ import "./Tasks.scss";
 
 function Tasks({ className, dateFromDiagram }) {
   const [tasksConsumptions, setTaskConsumptions] = useState([]);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
 
   const getTasksConsumptionData = async () => {
@@ -65,24 +65,26 @@ function Tasks({ className, dateFromDiagram }) {
   };
 
   const applyDateFromDiagram = () => {
-    const { year, month, day } = dateFromDiagram || {};
-    if (year && month && day) {
-      const date = new Date(`${year}/${month}/${day}`);
-      setStartDate(date);
-      setEndDate(date);
-    } else if (year && month) {
-      const start = new Date(`${year}/${month}/${"01"}`);
-      const end = new Date(`${year}/${month}/${getDaysInMonth(year, month)}`);
-      setStartDate(start);
-      setEndDate(end);
-    } else if (year) {
-      const start = new Date(`${year}/${"01"}/${"01"}`);
-      const end = new Date(`${year}/${"12"}/${"31"}`);
-      setStartDate(start);
-      setEndDate(end);
-    } else {
-      setStartDate(null);
-      setEndDate(null);
+    if (dateFromDiagram) {
+      const { year, month, day } = dateFromDiagram || {};
+      if (year && month && day) {
+        const date = new Date(`${year}/${month}/${day}`);
+        setStartDate(date);
+        setEndDate(date);
+      } else if (year && month) {
+        const start = new Date(`${year}/${month}/${"01"}`);
+        const end = new Date(`${year}/${month}/${getDaysInMonth(year, month)}`);
+        setStartDate(start);
+        setEndDate(end);
+      } else if (year) {
+        const start = new Date(`${year}/${"01"}/${"01"}`);
+        const end = new Date(`${year}/${"12"}/${"31"}`);
+        setStartDate(start);
+        setEndDate(end);
+      } else {
+        setStartDate(null);
+        setEndDate(null);
+      }
     }
   };
 
@@ -103,6 +105,7 @@ function Tasks({ className, dateFromDiagram }) {
             selectsStart
             selected={startDate}
             onChange={(date) => setStartDate(date)}
+            onSelect={(date) => setStartDate(date)}
             startDate={startDate}
           />
           <CustomDatePicker
@@ -110,6 +113,7 @@ function Tasks({ className, dateFromDiagram }) {
             selectsEnd
             selected={endDate}
             onChange={(date) => setEndDate(date)}
+            onSelect={(date) => setEndDate(date)}
             endDate={endDate}
             startDate={startDate}
             minDate={startDate}
