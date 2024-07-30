@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import CustomDatePicker from "@components/shared/DatePicker/DatePicker.jsx";
@@ -10,9 +11,12 @@ import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import moment from "moment/moment";
 import { getDaysInMonth } from "@constants/general.js";
 
+import { selectMinDate } from "@store/date/dateSelector.js";
+
 import "./Tasks.scss";
 
 function Tasks({ className, dateFromDiagram }) {
+  const minDate = useSelector(selectMinDate);
   const [tasksConsumptions, setTaskConsumptions] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -107,6 +111,8 @@ function Tasks({ className, dateFromDiagram }) {
             onChange={(date) => setStartDate(date)}
             onSelect={(date) => setStartDate(date)}
             startDate={startDate}
+            minDate={minDate}
+            maxDate={new Date()}
           />
           <CustomDatePicker
             label="End Date"
@@ -117,6 +123,7 @@ function Tasks({ className, dateFromDiagram }) {
             endDate={endDate}
             startDate={startDate}
             minDate={startDate}
+            maxDate={new Date()}
           />
         </div>
         {isLoading && <Loader />}

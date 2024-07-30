@@ -5,7 +5,8 @@ module.exports= {"presets": [
             "@babel/preset-env",
             {
                 "targets": {
-                    "browsers": "last 5 versions"
+                    "browsers": "last 5 versions",
+                    "esmodules": true
                 }
             }
         ],
