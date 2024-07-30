@@ -15,7 +15,7 @@ export default function App() {
                 FROM Interval`
       );
       const { minDate } = data[0];
-      dispatch({ type: dateTypes.setMinDate, payload: minDate });
+      dispatch({ type: dateTypes.setMinDate, payload: minDate ? new Date(minDate) : null });
     } catch (error) {
       console.error(error);
     }

@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import cn from "classnames";
 import Select from "@components/shared/Select/Select.jsx";
 import { monthNames, getDaysInMonth } from "@constants/general.js";
+import { useSelector } from "react-redux";
+import { selectMinDate } from "@store/date/dateSelector.js";
 
 import "./DropdownDate.scss";
 
@@ -15,11 +17,14 @@ function CustomDropdownDate({
   onYearChange,
   className
 }) {
+  const minDate = useSelector(selectMinDate);
+
   const currentYear = new Date().getFullYear();
+  const startYear = minDate?.getFullYear() || currentYear;
 
   const generateYears = () => {
     const years = [];
-    for (let i = currentYear; i <= currentYear + 30; i++) {
+    for (let i = startYear; i <= currentYear; i++) {
       years.push({ value: i, label: i });
     }
     return years;

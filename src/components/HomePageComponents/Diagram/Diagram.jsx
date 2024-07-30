@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { Bar } from "react-chartjs-2";
+import dateTypes from "@store/date/dateTypes.js";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,7 +18,7 @@ import cn from "classnames";
 import Card from "@components/shared/Card/Card.jsx";
 import Loader from "@components/shared/Loader/Loader.jsx";
 import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
-import CustomDropdownDate from "@components/shared/DropdownDate/DropdownDate.jsx";
+import CustomDropdownDate from "@components/HomePageComponents/Diagram/DropdownDate/DropdownDate.jsx";
 import Button from "@components/shared/Button/Button.jsx";
 
 import { monthNames } from "@constants/general.js";
@@ -25,7 +27,8 @@ import "./Diagram.scss";
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement, BarController);
 
-function Diagram({ className, handleSeeTopButtonClick }) {
+function Diagram({ className }) {
+  const dispatch = useDispatch();
   const [totalConsumption, setTotalConsumption] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -71,21 +74,26 @@ function Diagram({ className, handleSeeTopButtonClick }) {
     setDay({ value: currentDay, label: currentDay });
   };
 
+  const handleSeeTopButtonClick = () => {
+    const formattedDate = formatValues(year, month, day);
+    dispatch({ type: dateTypes.setExactDate, payload: formattedDate });
+  };
+
   const getTotalConsumption = async () => {
     try {
-      const formattedData = formatValues(year, month, day);
+      const formattedDate = formatValues(year, month, day);
       setIsLoading(true);
       let query = `
         SELECT SUM(Interval.total_energy_consumption) as total_energy_consumption,
                DATE(Interval.start_time) as date
             FROM Interval
     `;
-      if (formattedData.year && formattedData.month && formattedData.day) {
-        query += `\n WHERE date = '${formattedData.year}-${formattedData.month}-${formattedData.day}'`;
-      } else if (formattedData.year && formattedData.month) {
-        query += `\n WHERE strftime('%Y', date) = '${formattedData.year}' AND strftime('%m', date) = '${formattedData.month}'`;
-      } else if (formattedData.year) {
-        query += `\n WHERE strftime('%Y', date) = '${formattedData.year}'`;
+      if (formattedDate.year && formattedDate.month && formattedDate.day) {
+        query += `\n WHERE date = '${formattedDate.year}-${formattedDate.month}-${formattedDate.day}'`;
+      } else if (formattedDate.year && formattedDate.month) {
+        query += `\n WHERE strftime('%Y', date) = '${formattedDate.year}' AND strftime('%m', date) = '${formattedDate.month}'`;
+      } else if (formattedDate.year) {
+        query += `\n WHERE strftime('%Y', date) = '${formattedDate.year}'`;
       }
       query += `\n GROUP BY date`;
       const totalConsumptionData = await window.electron.fetchData(query);
@@ -167,10 +175,7 @@ function Diagram({ className, handleSeeTopButtonClick }) {
           <Button className="btn--primary" onClick={handleResetButtonClick}>
             Reset to current date
           </Button>
-          <Button
-            className="btn--secondary"
-            onClick={() => handleSeeTopButtonClick(formatValues(year, month, day))}
-          >
+          <Button className="btn--secondary" onClick={handleSeeTopButtonClick}>
             See top apps
           </Button>
         </div>
@@ -183,7 +188,6 @@ function Diagram({ className, handleSeeTopButtonClick }) {
 }
 
 Diagram.propTypes = {
-  className: PropTypes.string,
-  handleSeeTopButtonClick: PropTypes.func
+  className: PropTypes.string
 };
 export default Diagram;

@@ -8,15 +8,16 @@ import List from "@components/HomePageComponents/TasksComponent/List/List.jsx";
 import Task from "@components/HomePageComponents/TasksComponent/Task/Task.jsx";
 import Loader from "@components/shared/Loader/Loader.jsx";
 import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
-import moment from "moment/moment";
+import moment from "moment";
 import { getDaysInMonth } from "@constants/general.js";
 
-import { selectMinDate } from "@store/date/dateSelector.js";
+import { selectMinDate, selectExactDate } from "@store/date/dateSelector.js";
 
 import "./Tasks.scss";
 
-function Tasks({ className, dateFromDiagram }) {
+function Tasks({ className }) {
   const minDate = useSelector(selectMinDate);
+  const dateFromDiagram = useSelector(selectExactDate);
   const [tasksConsumptions, setTaskConsumptions] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -77,12 +78,14 @@ function Tasks({ className, dateFromDiagram }) {
         setEndDate(date);
       } else if (year && month) {
         const start = new Date(`${year}/${month}/${"01"}`);
-        const end = new Date(`${year}/${month}/${getDaysInMonth(year, month)}`);
+        const end = new Date(
+          Math.min(new Date(`${year}/${month}/${getDaysInMonth(year, month)}`), new Date())
+        );
         setStartDate(start);
         setEndDate(end);
       } else if (year) {
         const start = new Date(`${year}/${"01"}/${"01"}`);
-        const end = new Date(`${year}/${"12"}/${"31"}`);
+        const end = new Date(Math.min(new Date(`${year}/${"12"}/${"31"}`), new Date()));
         setStartDate(start);
         setEndDate(end);
       } else {
@@ -122,7 +125,7 @@ function Tasks({ className, dateFromDiagram }) {
             onSelect={(date) => setEndDate(date)}
             endDate={endDate}
             startDate={startDate}
-            minDate={startDate}
+            minDate={startDate || minDate}
             maxDate={new Date()}
           />
         </div>

@@ -16,7 +16,7 @@ export default function Header() {
                 FROM Interval`
       );
       const { lastUpdate } = data[0];
-      setLastUpdate(lastUpdate);
+      setLastUpdate(lastUpdate || "-");
     } catch (error) {
       console.error(error);
     }
