@@ -1,14 +1,40 @@
+@import "src/styles/variables";
+
 .diagram {
   max-height: 100%;
   min-height: 100%;
 
   &__dates {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 
   &__buttons {
     margin-bottom: 24px;
     display: flex;
     gap: 16px;
+  }
+
+  &__chart {
+    position: relative;
+    aspect-ratio: 1;
+    width: 100% !important;
+    max-height: 420px !important;
+    height: 100% !important;
+
+    canvas {
+      height: auto !important;
+    }
+
+    @media only screen and (max-width: $bp-extra-large) {
+      max-height: 420px !important;
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+      max-height: 375px !important;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      max-height: 315px !important;
+    }
   }
 }

@@ -1,3 +1,5 @@
+@import "src/styles/variables";
+
 .tasks {
   max-height: 100%;
   min-height: 100%;
@@ -7,5 +9,10 @@
     grid-template-columns: repeat(2, minmax(200px, 1fr));
     gap: 24px;
     margin-bottom: 24px;
+
+    @media only screen and (max-width: $bp-extra-large) {
+      grid-template-columns: repeat(3, 200px);
+      gap: 16px;
+    }
   }
 }

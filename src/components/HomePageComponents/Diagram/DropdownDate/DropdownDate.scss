@@ -1,5 +1,12 @@
+@import "src/styles/variables";
+
 .dropdown-date {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+
+  @media only screen and (max-width: $bp-extra-large) {
+    grid-template-columns: repeat(3, 200px);
+    gap: 16px;
+  }
 }

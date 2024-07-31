@@ -181,7 +181,11 @@ function Diagram({ className }) {
         </div>
         {isLoading && <Loader />}
         {totalConsumption.length === 0 && !isLoading && <EmptyState />}
-        {totalConsumption.length > 0 && !isLoading && <Bar data={data} options={options} />}
+        {totalConsumption.length > 0 && !isLoading && (
+          <div className="diagram__chart">
+            <Bar data={data} options={options} />
+          </div>
+        )}
       </Card>
     </div>
   );
