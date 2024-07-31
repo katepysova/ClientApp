@@ -13,7 +13,7 @@
 
     @media only screen and (max-width: $bp-extra-large) {
       grid-template-columns: 1fr;
-      grid-template-rows: 200px auto auto;
+      grid-template-rows: 200px minmax(550px, auto) minmax(550px, auto);
       min-height: 100%;
       max-height: fit-content;
     }
