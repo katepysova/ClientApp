@@ -78,7 +78,7 @@ function Task({ task }) {
           <div className="task__info">
             <span className="task__info-label">Energy Consumption: </span>
             <span className="task__info-value">
-              {formatNumberToPrecision(task.energy_consumption, 6)} Joules
+              {formatNumberToPrecision(task.energy_consumption)} Joules
             </span>
           </div>
           <div className="task__info">

@@ -77,14 +77,14 @@ function Tasks({ className }) {
         setStartDate(date);
         setEndDate(date);
       } else if (year && month) {
-        const start = new Date(`${year}/${month}/${"01"}`);
+        const start = new Date(Math.max(new Date(`${year}/${month}/${"01"}`), minDate));
         const end = new Date(
           Math.min(new Date(`${year}/${month}/${getDaysInMonth(year, month)}`), new Date())
         );
         setStartDate(start);
         setEndDate(end);
       } else if (year) {
-        const start = new Date(`${year}/${"01"}/${"01"}`);
+        const start = new Date(Math.max(new Date(`${year}/${"01"}/${"01"}`), minDate));
         const end = new Date(Math.min(new Date(`${year}/${"12"}/${"31"}`), new Date()));
         setStartDate(start);
         setEndDate(end);

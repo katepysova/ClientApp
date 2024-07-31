@@ -22,6 +22,7 @@ import CustomDropdownDate from "@components/HomePageComponents/Diagram/DropdownD
 import Button from "@components/shared/Button/Button.jsx";
 
 import { monthNames } from "@constants/general.js";
+import { formatNumberToPrecision } from "@common/service.js";
 
 import "./Diagram.scss";
 
@@ -29,7 +30,8 @@ ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement,
 
 function Diagram({ className }) {
   const dispatch = useDispatch();
-  const [totalConsumption, setTotalConsumption] = useState([]);
+  const [totalConsumptionArray, setTotalConsumptionArray] = useState([]);
+  const [totalConsumptionValue, setTotalConsumptionValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const currentYear = new Date().getFullYear();
@@ -79,6 +81,14 @@ function Diagram({ className }) {
     dispatch({ type: dateTypes.setExactDate, payload: formattedDate });
   };
 
+  const setTotalConsumptionFormatted = (value) => {
+    if (!value) {
+      setTotalConsumptionValue(0);
+    } else {
+      setTotalConsumptionValue(formatNumberToPrecision(value));
+    }
+  };
+
   const getTotalConsumption = async () => {
     try {
       const formattedDate = formatValues(year, month, day);
@@ -97,7 +107,12 @@ function Diagram({ className }) {
       }
       query += `\n GROUP BY date`;
       const totalConsumptionData = await window.electron.fetchData(query);
-      setTotalConsumption(totalConsumptionData);
+      const sum = totalConsumptionData.reduce(
+        (acc, value) => acc + value?.total_energy_consumption,
+        0
+      );
+      setTotalConsumptionArray(totalConsumptionData);
+      setTotalConsumptionFormatted(sum);
     } catch (error) {
       console.error(error);
     } finally {
@@ -112,14 +127,14 @@ function Diagram({ className }) {
   }, [day, month, year]);
 
   const data = {
-    labels: totalConsumption.map((item) => item?.date),
+    labels: totalConsumptionArray.map((item) => item?.date),
     datasets: [
       {
         label: "Total Energy Consumption",
         backgroundColor: "rgba(171, 0, 102, 0.75)",
         borderColor: "rgba(171, 0, 102, 1)",
         borderWidth: 1,
-        data: totalConsumption.map((item) => item?.total_energy_consumption),
+        data: totalConsumptionArray.map((item) => item?.total_energy_consumption),
         font: 16
       }
     ]
@@ -159,9 +174,10 @@ function Diagram({ className }) {
       }
     }
   };
+  const cardTitle = `Total Energy Consumption: ${totalConsumptionValue} Joules`;
   return (
     <div className={cn("diagram", className)}>
-      <Card title="Total Energy Consumption">
+      <Card title={cardTitle}>
         <CustomDropdownDate
           className={"diagram__dates"}
           year={year}
@@ -180,8 +196,8 @@ function Diagram({ className }) {
           </Button>
         </div>
         {isLoading && <Loader />}
-        {totalConsumption.length === 0 && !isLoading && <EmptyState />}
-        {totalConsumption.length > 0 && !isLoading && (
+        {totalConsumptionArray.length === 0 && !isLoading && <EmptyState />}
+        {totalConsumptionArray.length > 0 && !isLoading && (
           <div className="diagram__chart">
             <Bar data={data} options={options} />
           </div>

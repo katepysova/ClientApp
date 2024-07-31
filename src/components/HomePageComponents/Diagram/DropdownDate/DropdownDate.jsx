@@ -18,9 +18,12 @@ function CustomDropdownDate({
   className
 }) {
   const minDate = useSelector(selectMinDate);
-
   const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth();
+  const currentDay = new Date().getDate();
   const startYear = minDate?.getFullYear() || currentYear;
+  const startMonth = minDate?.getMonth() || currentMonth;
+  const startDay = minDate?.getDate() || currentDay;
 
   const generateYears = () => {
     const years = [];
@@ -32,7 +35,17 @@ function CustomDropdownDate({
 
   const generateMonths = () => {
     if (year?.value) {
-      return monthNames.map((name, index) => ({ value: index + 1, label: name }));
+      let leftBoundary = 0;
+      let rightBoundary = monthNames.length;
+      if (year.value === startYear) {
+        leftBoundary = startMonth;
+      }
+      if (year.value === currentYear) {
+        rightBoundary = currentMonth;
+      }
+      return monthNames
+        .map((name, index) => ({ value: index + 1, label: name }))
+        .slice(leftBoundary, rightBoundary + 1);
     }
     return [];
   };
@@ -40,7 +53,20 @@ function CustomDropdownDate({
   const generateDays = () => {
     if (year?.value && month?.value) {
       const daysInMonth = getDaysInMonth(year.value, month.value);
-      return Array.from({ length: daysInMonth }, (v, k) => ({ value: k + 1, label: k + 1 }));
+      let leftBoundary = 0;
+      let rightBoundary = daysInMonth;
+
+      if (year.value === startYear && month.value === startMonth + 1) {
+        leftBoundary = startDay - 1;
+      }
+
+      if (year.value === currentYear && month.value === currentMonth + 1) {
+        rightBoundary = currentDay;
+      }
+
+      const days = Array.from({ length: daysInMonth }, (v, k) => ({ value: k + 1, label: k + 1 }));
+
+      return days.slice(leftBoundary, rightBoundary + 2);
     }
     return [];
   };
@@ -53,6 +79,17 @@ function CustomDropdownDate({
       }
     }
   }, [year, month]);
+
+  useEffect(() => {
+    if (year?.value && month?.value) {
+      if (year.value === currentYear && month.value > currentMonth + 1) {
+        onMonthChange({ value: currentMonth + 1, label: monthNames[currentMonth] });
+      }
+      if (year.value === startYear && month.value < startMonth) {
+        onMonthChange({ value: startMonth + 1, label: monthNames[startMonth] });
+      }
+    }
+  }, [year]);
 
   return (
     <div className={cn("dropdown-date", className)}>
