@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import logo from "@images/logo.svg";
 import { routes } from "@constants/routes.js";
 
 import "./Header.scss";
+
+const format = "DD/MM/YYYY HH:mm:ss";
 
 export default function Header() {
   const [lastUpdate, setLastUpdate] = useState("-");
@@ -15,8 +18,9 @@ export default function Header() {
                 MAX(Interval.start_time) as lastUpdate
                 FROM Interval`
       );
-      const { lastUpdate } = data[0];
-      setLastUpdate(lastUpdate || "-");
+      let { lastUpdate } = data[0];
+      lastUpdate = lastUpdate ? moment(new Date(lastUpdate)).format(format) : "-";
+      setLastUpdate(lastUpdate);
     } catch (error) {
       console.error(error);
     }
