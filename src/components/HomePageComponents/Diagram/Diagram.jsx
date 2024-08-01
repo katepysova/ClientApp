@@ -50,9 +50,7 @@ function Diagram({ className }) {
 
   const handleMonthChange = (selectedOption) => {
     setMonth(selectedOption);
-    if (!selectedOption) {
-      setDay(null);
-    }
+    setDay(null);
   };
 
   const handleDayChange = (selectedOption) => {
