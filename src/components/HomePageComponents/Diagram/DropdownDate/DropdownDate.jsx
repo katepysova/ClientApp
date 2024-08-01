@@ -66,7 +66,7 @@ function CustomDropdownDate({
 
       const days = Array.from({ length: daysInMonth }, (v, k) => ({ value: k + 1, label: k + 1 }));
 
-      return days.slice(leftBoundary, rightBoundary + 2);
+      return days.slice(leftBoundary, rightBoundary);
     }
     return [];
   };
@@ -85,7 +85,7 @@ function CustomDropdownDate({
       if (year.value === currentYear && month.value > currentMonth + 1) {
         onMonthChange({ value: currentMonth + 1, label: monthNames[currentMonth] });
       }
-      if (year.value === startYear && month.value < startMonth) {
+      if (year.value === startYear && month.value < startMonth + 1) {
         onMonthChange({ value: startMonth + 1, label: monthNames[startMonth] });
       }
     }
