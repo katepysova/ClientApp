@@ -1,14 +1,14 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const sqlite3 = require("sqlite3").verbose();
-const os = require('os');
-const path = require('path');
+const os = require("os");
+const path = require("path");
 const system = os.platform().toLowerCase();
 let dbPath;
 
-if (system.startsWith('darwin')) {
-  dbPath = '/Library/Application Support/PowerObserver/energy_measurements.db';
+if (system.startsWith("darwin")) {
+  dbPath = "/Library/Application Support/PowerObserver/energy_measurements.db";
 } else {
-  dbPath = path.join(os.tmpdir(), 'PowerObserver/energy_measurements.db');
+  dbPath = path.join(os.tmpdir(), "PowerObserver/energy_measurements.db");
 }
 
 if (require("electron-squirrel-startup")) {
