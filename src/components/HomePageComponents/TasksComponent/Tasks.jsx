@@ -9,7 +9,7 @@ import Task from "@components/HomePageComponents/TasksComponent/Task/Task.jsx";
 import Loader from "@components/shared/Loader/Loader.jsx";
 import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import moment from "moment";
-import { getDaysInMonth } from "@constants/general.js";
+import { getDaysInMonth, LIMIT } from "@constants/general.js";
 
 import { selectMinDate, selectExactDate } from "@store/date/dateSelector.js";
 
@@ -103,9 +103,10 @@ function Tasks({ className }) {
     applyDateFromDiagram();
   }, [dateFromDiagram]);
 
+  const cardTitle = `Top ${LIMIT} Carbon Emitting Applications`;
   return (
     <div className={cn("tasks", className)}>
-      <Card title="Top 9 Carbon Emitting Applications">
+      <Card title={cardTitle}>
         <div className="tasks__calendars">
           <CustomDatePicker
             label="Start Date"

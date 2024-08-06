@@ -87,3 +87,9 @@
 .heading-tertiary {
   @include font19BoldMixin;
 }
+
+.heading-4 {
+  @include font16BoldMixin;
+
+  color: $color-mid-grey;
+}

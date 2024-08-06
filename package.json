@@ -1,8 +1,8 @@
 {
-  "name": "laptop-energy",
-  "productName": "laptop-energy",
+  "name": "power-leaf",
+  "productName": "PowerLeaf",
   "version": "1.0.0",
-  "description": "Laptop Energy",
+  "description": "PowerLeaf Application to measure laptop applications energy consumption.",
   "main": ".webpack/main",
   "scripts": {
     "start": "cross-env NODE_ENV=development BABEL_ENV=development electron-forge start",
@@ -21,6 +21,7 @@
     "@babel/preset-react": "^7.24.7",
     "@electron-forge/cli": "^7.4.0",
     "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-dmg": "^7.4.0",
     "@electron-forge/maker-rpm": "^7.4.0",
     "@electron-forge/maker-squirrel": "^7.4.0",
     "@electron-forge/maker-zip": "^7.4.0",
@@ -62,6 +63,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@electron-forge/core": "^7.4.0",
     "chart.js": "^4.4.3",
     "classnames": "^2.5.1",
     "electron-squirrel-startup": "^1.0.1",

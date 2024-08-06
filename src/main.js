@@ -1,9 +1,12 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, Notification, nativeImage } = require("electron");
 const sqlite3 = require("sqlite3").verbose();
 const os = require("os");
 const path = require("path");
 const system = os.platform().toLowerCase();
 let dbPath;
+
+const appIcon = nativeImage.createFromPath(path.join(process.cwd(), "/src/images/logo.png"));
+appIcon.setTemplateImage(true);
 
 if (system.startsWith("darwin")) {
   dbPath = "/Library/Application Support/PowerObserver/energy_measurements.db";
@@ -28,6 +31,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1440,
     height: 800,
+    icon: appIcon,
     webPreferences: {
       // eslint-disable-next-line no-undef
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -46,20 +50,23 @@ const createWindow = () => {
   mainWindow.maximize();
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  createWindow();
-
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+app
+  .whenReady()
+  .then(() => {
+    createWindow();
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    app.on("activate", () => {
+      if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+      }
+    });
+  })
+  .then(() => {
+    if (process.platform === "win32") {
+      app.setAppUserModelId(app.name);
     }
   });
-});
 
 ipcMain.handle("fetchData", async (event, query) => {
   return new Promise((resolve, reject) => {
@@ -71,6 +78,22 @@ ipcMain.handle("fetchData", async (event, query) => {
       }
     });
   });
+});
+
+ipcMain.on("notify", (_, payload) => {
+  if (Notification.isSupported()) {
+    console.log(path.join(__dirname), process.cwd());
+    const notificationOptions = {
+      silent: false,
+      hasReply: false,
+      timeoutType: "never",
+      icon: appIcon,
+      ...payload
+    };
+
+    const notification = new Notification({ ...notificationOptions });
+    notification.show();
+  }
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
