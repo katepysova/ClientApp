@@ -67,11 +67,11 @@ function Task({ task }) {
   };
 
   const itemElements = commonItems.map((item, index) => (
-    <div className="task__info">
+    <div key={index} className="task__info">
       <span className="task__info-label">
-        <Icon symbol={item['icon']}></Icon>
+        <Icon symbol={item["icon"]}></Icon>
       </span>
-      <span className="task__info-value">{item['carbonValue'](task.energy_consumption)}</span>
+      <span className="task__info-value">{item["carbonValue"](task.energy_consumption)}</span>
     </div>
   ));
 
@@ -87,12 +87,13 @@ function Task({ task }) {
           <Icon symbol={icons.arrowDown}></Icon>
         </span>
       </button>
-      <div className="spoiler-body" style={{overflow: 'auto'}}>
+      <div className="spoiler-body" style={{ overflow: "auto" }}>
         <div className="task__extra">
           <div className="task__info">
             <span className="task__info-label">Energy Consumption: </span>
             <span className="task__info-value">
-              {formatNumberToPrecision(task.energy_consumption)} Joules ({formatNumberToPrecision(task.energy_consumption / 3600000, 4)} kWh)
+              {formatNumberToPrecision(task.energy_consumption)} Joules (
+              {formatNumberToPrecision(task.energy_consumption / 3600000, 4)} kWh)
             </span>
           </div>
           <div className="task__info">

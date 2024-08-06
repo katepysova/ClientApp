@@ -172,7 +172,10 @@ function Diagram({ className }) {
       }
     }
   };
-  const yearlyConsumption = totalConsumptionArray.length === 0 ? '0' : (totalConsumptionValue * 200 / totalConsumptionArray.length).toString();
+  const yearlyConsumption =
+    totalConsumptionArray.length === 0
+      ? "0"
+      : ((totalConsumptionValue * 200) / totalConsumptionArray.length).toString();
   // const cardTitle = `Total Energy Consumption: ${totalConsumptionValue} Joules`;
   const cardTitle = `Estimated Annual Consumption: ${yearlyConsumption} Joules`;
   // const cardTitle = `Total Energy Consumption: ${totalConsumptionValue / 3600000} kWh`;
