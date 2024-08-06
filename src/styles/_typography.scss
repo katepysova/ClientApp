@@ -90,6 +90,8 @@
 
 .heading-4 {
   @include font16BoldMixin;
+}
 
-  color: $color-mid-grey;
+.heading-5 {
+  @include font14BoldMixin;
 }
