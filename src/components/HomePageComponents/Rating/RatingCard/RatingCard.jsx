@@ -56,7 +56,6 @@ function generateIconByRating(r, n) {
 function RatingCard({ rating, index }) {
   const { image, tooltipContent, id } = generateIconByRating(rating.value, rating.machines);
   const tooltipId = `rating-info--${index}-${id}`;
-  console.log(tooltipId);
   return (
     <div className="rating-card">
       <figure className="rating-card__image">
