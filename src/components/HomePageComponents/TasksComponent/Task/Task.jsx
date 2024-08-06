@@ -71,7 +71,9 @@ function Task({ task, days }) {
       <span className="task__info-label">
         <Icon symbol={item["icon"]}></Icon>
       </span>
-      <span className="task__info-value">{item["carbonValue"](task.energy_consumption)} per year</span>
+      <span className="task__info-value">
+        {item["carbonValue"](task.energy_consumption)} per year
+      </span>
     </div>
   ));
 
@@ -109,7 +111,8 @@ function Task({ task, days }) {
 }
 
 Task.propTypes = {
-  task: PropTypes.object.isRequired
+  task: PropTypes.object.isRequired,
+  days: PropTypes.number.isRequired
 };
 
 export default Task;

@@ -50,16 +50,16 @@ function Tasks({ className }) {
       let queryDays = `
         SELECT COUNT(DISTINCT DATE(Interval.start_time)) as uniqueDays
         FROM INTERVAL
-      `
+      `;
       if (formattedStartDate && formattedEndDate) {
         baseQuery += `\n WHERE date BETWEEN '${formattedStartDate}' AND '${formattedEndDate}'`;
-        queryDays += `\n WHERE DATE(Interval.start_time) BETWEEN '${formattedStartDate}' AND '${formattedEndDate}'`
+        queryDays += `\n WHERE DATE(Interval.start_time) BETWEEN '${formattedStartDate}' AND '${formattedEndDate}'`;
       } else if (formattedStartDate) {
         baseQuery += `\n WHERE date >= '${formattedStartDate}'`;
-        queryDays += `\n WHERE DATE(Interval.start_time) >= '${formattedStartDate}'`
+        queryDays += `\n WHERE DATE(Interval.start_time) >= '${formattedStartDate}'`;
       } else if (formattedEndDate) {
         baseQuery += `\n WHERE date <'${formattedEndDate}'`;
-        queryDays += `\n WHERE DATE(Interval.start_time) < '${formattedEndDate}'`
+        queryDays += `\n WHERE DATE(Interval.start_time) < '${formattedEndDate}'`;
       }
 
       baseQuery += `\n GROUP BY Task.task_name
@@ -67,7 +67,7 @@ function Tasks({ className }) {
 
       const tasksConsumptionData = await window.electron.fetchData(baseQuery);
       const uniqueDays = await window.electron.fetchData(queryDays);
-      setTotalUniqueDays(uniqueDays[0]['uniqueDays'])
+      setTotalUniqueDays(uniqueDays[0]["uniqueDays"]);
       setTaskConsumptions(tasksConsumptionData);
     } catch (error) {
       console.error(error);
@@ -143,7 +143,7 @@ function Tasks({ className }) {
         {tasksConsumptions.length > 0 && !isLoading && (
           <List>
             {tasksConsumptions.map((task) => (
-              <Task key={task.task_name} task={task} days={totalUniqueDays}/>
+              <Task key={task.task_name} task={task} days={totalUniqueDays} />
             ))}
           </List>
         )}
