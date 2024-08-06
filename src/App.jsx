@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import "@styles/main.scss";
 import AppRouter from "@/router/Router.jsx";
 import { useDispatch } from "react-redux";
 import dateTypes from "@store/date/dateTypes.js";
+import "@styles/main.scss";
 
-const ENERGY_CONSUMPTION_THRESHOLD = 1000; // Joules
+const ENERGY_CONSUMPTION_THRESHOLD = 100; // Joules
 
 export default function App() {
   const dispatch = useDispatch();
@@ -27,7 +27,8 @@ export default function App() {
     try {
       let data = await window.electron.fetchData(
         `SELECT TaskConsumption.task_name,
-            TaskConsumption.energy_consumption
+            TaskConsumption.energy_consumption,
+            DATE(Interval.start_time) as date
             FROM TaskConsumption
             LEFT JOIN INTERVAL
             ON TaskConsumption.interval_id = INTERVAL.id
@@ -35,9 +36,8 @@ export default function App() {
             AND INTERVAL.start_time = (
                 SELECT MAX(INTERVAL.start_time)
                 FROM INTERVAL
-            )`
+            ) AND date = DATE('now')`
       );
-
       data?.forEach((app) => {
         const title = `${app?.task_name}`;
         const body = "Is consuming too much energy.";
@@ -45,6 +45,7 @@ export default function App() {
           window.electron.notify({ title, body });
         }, 500);
       });
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +55,7 @@ export default function App() {
     getMinDate();
     setInterval(() => {
       getOverTreshholdEnergyConsumingApps();
-    }, 2000);
+    }, 3000 * 60);
   }, []);
 
   return <AppRouter />;
