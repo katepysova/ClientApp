@@ -15,49 +15,49 @@ const renderIcon = (iconData) => {
   return <img src={emptyImage} alt="Task Icon" />;
 };
 
-function Task({ task }) {
+function Task({ task, days }) {
   const [isSpoilerOpen, toggleSpoilerOpen] = useState(false);
   const energyConsumptionInGrams = convertJoulesToGrams(task.energy_consumption);
   // eslint-disable-next-line no-unused-vars
   const commonItems = [
     {
       icon: icons.coffee,
-      class: 'coffee',
       title: "1 cup of coffee - 50g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
         const value = (1 * energyInGrams) / 50;
-        return `${formatNumberToPrecision(value)} cups of coffee`;
+        const annual_value = (value * 200) / days;
+        return `${formatNumberToPrecision(annual_value)} cups of coffee`;
       }
     },
     {
       icon: icons.beer,
-      class: 'beer',
       title: "1 pint of beer - 665g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
         const value = (1 * energyInGrams) / 665;
-        return `${formatNumberToPrecision(value)} pints of beer`;
+        const annual_value = (value * 200) / days;
+        return `${formatNumberToPrecision(annual_value)} pints of beer`;
       }
     },
     {
       icon: icons.clothes,
-      class: 'clothes',
       title: "€50 on clothes - 187g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
         const value = (50 * energyInGrams) / 187;
-        return `€${formatNumberToPrecision(value)} of clothes`;
+        const annual_value = (value * 200) / days;
+        return `€${formatNumberToPrecision(annual_value)} of clothes`;
       }
     },
     {
       icon: icons.bag,
-      class: 'bag',
       title: "1 plastic bag - 33g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
         const value = (1 * energyInGrams) / 33;
-        return `${formatNumberToPrecision(value)} plastic bags`;
+        const annual_value = (value * 200) / days;
+        return `${formatNumberToPrecision(annual_value)} plastic bags`;
       }
     }
   ];
@@ -71,11 +71,10 @@ function Task({ task }) {
       <span className="task__info-label">
         <Icon symbol={item["icon"]}></Icon>
       </span>
-      <span className="task__info-value">{item["carbonValue"](task.energy_consumption)}</span>
+      <span className="task__info-value">{item["carbonValue"](task.energy_consumption)} per year</span>
     </div>
   ));
 
-  console.log(itemElements);
   return (
     <li className={cn("task spoiler", { open: isSpoilerOpen })}>
       <button className="task__header spoiler-header" onClick={handleClick}>
