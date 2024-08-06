@@ -74,9 +74,10 @@ function Diagram({ className }) {
     setDay({ value: currentDay, label: currentDay });
   };
 
-  const handleSeeTopButtonClick = () => {
+  const handleUpdateButttonClick = async () => {
     const formattedDate = formatValues(year, month, day);
     dispatch({ type: dateTypes.setExactDate, payload: formattedDate });
+    await getTotalConsumption();
   };
 
   const setTotalConsumptionFormatted = (value) => {
@@ -86,6 +87,11 @@ function Diagram({ className }) {
       setTotalConsumptionValue(formatNumberToPrecision(value));
     }
   };
+
+  useEffect(() => {
+    handleUpdateButttonClick();
+    getTotalConsumption();
+  }, [year, month, day]);
 
   const getTotalConsumption = async () => {
     try {
@@ -119,10 +125,6 @@ function Diagram({ className }) {
       }, 500);
     }
   };
-
-  useEffect(() => {
-    getTotalConsumption();
-  }, [day, month, year]);
 
   const data = {
     labels: totalConsumptionArray.map((item) => item?.date),
@@ -189,8 +191,8 @@ function Diagram({ className }) {
           <Button className="btn--primary" onClick={handleResetButtonClick}>
             Reset to current date
           </Button>
-          <Button className="btn--secondary" onClick={handleSeeTopButtonClick}>
-            See top apps
+          <Button className="btn--secondary" onClick={handleUpdateButttonClick}>
+            Update
           </Button>
         </div>
         {isLoading && <Loader />}
