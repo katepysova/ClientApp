@@ -1,9 +1,11 @@
 const { FusesPlugin } = require("@electron-forge/plugin-fuses");
 const { FuseV1Options, FuseVersion } = require("@electron/fuses");
+const path = require("path");
 
 module.exports = {
   packagerConfig: {
-    asar: true
+    asar: true,
+    icon: path.join(process.cwd(), "/src/images/logo")
   },
   rebuildConfig: {},
   makers: [
@@ -22,6 +24,13 @@ module.exports = {
     {
       name: "@electron-forge/maker-rpm",
       config: {}
+    },
+    {
+      name: "@electron-forge/maker-dmg",
+      config: {
+        format: "ULFO"
+      },
+      platforms: ["darwin"]
     }
   ],
   plugins: [

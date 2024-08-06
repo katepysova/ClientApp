@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import logo from "@images/logo.svg";
+import logo from "@images/logo.png";
 import { routes } from "@constants/routes.js";
 
 import "./Header.scss";
@@ -37,7 +37,7 @@ export default function Header() {
           <Link to={routes.index}>
             <img className="header__logo" src={logo} alt="logo" />
           </Link>
-          <h3 className="header__title-text">Laptop Energy</h3>
+          <h3 className="header__title-text">PowerLeaf</h3>
         </div>
         <p className="header__update-status">Last updated: {lastUpdate}</p>
       </div>

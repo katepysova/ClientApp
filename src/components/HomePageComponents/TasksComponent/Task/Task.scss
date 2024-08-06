@@ -11,6 +11,7 @@
     position: relative;
     display: flex;
     padding-left: 32px;
+    padding-right: 32px;
 
     &::before {
       @include font14Mixin;
@@ -77,7 +78,7 @@
 .spoiler-icon {
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 4px;
   transform: translateY(-50%);
   transition: all 0.3s;
 
