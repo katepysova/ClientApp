@@ -40,16 +40,43 @@
   }
 
   &__info {
+    &-label {
+      @include font14Mixin;
+    }
+
     &-value {
-      @include font16BoldMixin;
+      @include font14BoldMixin;
+
+      font-style: italic;
+    }
+  }
+
+  &__common {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &-metrics {
+      display: grid;
+      place-content: start start;
+      gap: 4px;
+      column-gap: 12px;
+      margin-top: 8px;
+    }
+
+    &-label {
+    }
+
+    &-value {
+      @include font14BoldMixin;
 
       font-style: italic;
     }
   }
 
   &__extra {
-    background-color: $color-black-8;
-    padding: 4px 8px;
+    background-color: rgba($color-indigo-tint-4, 0.8);
+    padding: 12px;
     border-radius: 6px;
   }
 }
@@ -63,6 +90,8 @@
   transition: all 0.3s;
   position: relative;
   width: 100%;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .spoiler-body {
@@ -72,7 +101,6 @@
   visibility: hidden;
   overflow: hidden;
   transition: all 0.3s;
-  padding: 0 8px;
 }
 
 .spoiler-icon {
@@ -90,12 +118,10 @@
 .spoiler {
   &.open {
     .spoiler-body {
-      max-height: 150px;
+      max-height: 450px;
       height: 100%;
       opacity: 1;
       visibility: visible;
-      padding-top: 8px;
-      padding-bottom: 8px;
     }
 
     .spoiler-icon {

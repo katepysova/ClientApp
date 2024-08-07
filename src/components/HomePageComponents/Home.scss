@@ -3,12 +3,12 @@
 
 .home-page {
   &__main {
-    min-height: 100%;
-    max-height: 100%;
+    min-height: fit-content;
+    max-height: fit-content;
     height: 100%;
     display: grid;
     grid-template-columns: 0.6fr 0.4fr;
-    grid-template-rows: minmax(200px, auto) minmax(662px, auto);
+    grid-template-rows: 210px 610px;
     gap: 24px;
 
     @media only screen and (max-width: $bp-extra-large) {

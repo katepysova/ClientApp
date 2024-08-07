@@ -66,6 +66,7 @@ function Tasks({ className }) {
          ORDER BY energy_consumption DESC LIMIT 9;`;
 
       const tasksConsumptionData = await window.electron.fetchData(baseQuery);
+      console.log({ tasksConsumptionData });
       const uniqueDays = await window.electron.fetchData(queryDays);
       setTotalUniqueDays(uniqueDays[0]["uniqueDays"]);
       setTaskConsumptions(tasksConsumptionData);

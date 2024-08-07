@@ -18,7 +18,6 @@ const renderIcon = (iconData) => {
 function Task({ task, days }) {
   const [isSpoilerOpen, toggleSpoilerOpen] = useState(false);
   const energyConsumptionInGrams = convertJoulesToGrams(task.energy_consumption);
-  // eslint-disable-next-line no-unused-vars
   const commonItems = [
     {
       icon: icons.coffee,
@@ -41,16 +40,6 @@ function Task({ task, days }) {
       }
     },
     {
-      icon: icons.clothes,
-      title: "€50 on clothes - 187g CO2",
-      carbonValue: (energyInJoules) => {
-        const energyInGrams = convertJoulesToGrams(energyInJoules);
-        const value = (50 * energyInGrams) / 187;
-        const annual_value = (value * 200) / days;
-        return `€${formatNumberToPrecision(annual_value)} of clothes`;
-      }
-    },
-    {
       icon: icons.bag,
       title: "1 plastic bag - 33g CO2",
       carbonValue: (energyInJoules) => {
@@ -67,11 +56,11 @@ function Task({ task, days }) {
   };
 
   const itemElements = commonItems.map((item, index) => (
-    <div key={index} className="task__info">
-      <span className="task__info-label">
+    <div key={index} className="task__common">
+      <span className="task__common-label">
         <Icon symbol={item["icon"]}></Icon>
       </span>
-      <span className="task__info-value">
+      <span className="task__common-value">
         {item["carbonValue"](task.energy_consumption)} per year
       </span>
     </div>
@@ -94,7 +83,7 @@ function Task({ task, days }) {
             <span className="task__info-label">Energy Consumption: </span>
             <span className="task__info-value">
               {formatNumberToPrecision(task.energy_consumption)} Joules (
-              {formatNumberToPrecision(task.energy_consumption / 3600000, 4)} kWh)
+              {formatNumberToPrecision(task.energy_consumption / 3600000, 6)} kWh)
             </span>
           </div>
           <div className="task__info">
@@ -103,7 +92,7 @@ function Task({ task, days }) {
               {formatNumberToPrecision(energyConsumptionInGrams)} Grams
             </span>
           </div>
-          {itemElements}
+          <div className="task__common-metrics">{itemElements}</div>
         </div>
       </div>
     </li>

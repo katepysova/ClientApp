@@ -5,7 +5,16 @@ import "react-tooltip/dist/react-tooltip.css";
 
 function Tooltip({ ...props }) {
   return (
-    <ReactTooltip {...props} style={{ backgroundColor: "#696969", color: "#fff", zIndex: 100 }} />
+    <ReactTooltip
+      {...props}
+      style={{
+        backgroundColor: "#696969",
+        color: "#fff",
+        zIndex: 100,
+        maxWidth: 250,
+        textAlign: "center"
+      }}
+    />
   );
 }
 

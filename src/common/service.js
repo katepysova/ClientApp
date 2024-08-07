@@ -3,6 +3,6 @@ export const convertJoulesToGrams = (energy) => {
   // reference: https://www.epa.gov/energy/greenhouse-gas-equivalencies-calculator#results
 };
 
-export const formatNumberToPrecision = (num, precision = 2) => {
+export const formatNumberToPrecision = (num, precision = 4) => {
   return num.toFixed(precision);
 };
