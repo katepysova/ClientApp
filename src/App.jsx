@@ -43,7 +43,7 @@ export default function App() {
         const body = "Is consuming too much energy.";
         setTimeout(() => {
           window.electron.notify({ title, body });
-        }, 500);
+        }, 1000);
       });
       console.log(data);
     } catch (error) {

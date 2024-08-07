@@ -9,52 +9,47 @@ import info from "@images/info_image.png";
 
 import "./RatingCard.scss";
 
-function generateIconByRating(r, n) {
-  const top10PercentThreshold = Math.ceil(0.1 * n);
-  const bottom10PercentThreshold = Math.floor(0.9 * n);
-  const top50PercentThreshold = Math.ceil(0.5 * n);
-  const bottom50PercentThreshold = Math.floor(0.5 * n);
+const RATING_DATA = {
+  10: {
+    image: plantGreen,
+    tooltipContent: "You are in the top 10% least energy consuming users.",
+    id: 1
+  },
+  50: {
+    image: plantBlue,
+    tooltipContent: "You are in the top 50% least energy consuming users.",
+    id: 2
+  },
+  90: {
+    image: plantYellow,
+    tooltipContent: "You are in the top 50% most energy consuming users.",
+    id: 3
+  },
+  100: {
+    image: plantRed,
+    tooltipContent: "You are in the top 10% most energy consuming users.",
+    id: 4
+  }
+};
 
-  // Check if the user is in the top 10%
-  const isTop10Percent = r <= top10PercentThreshold;
-  if (isTop10Percent) {
-    return {
-      image: plantGreen,
-      tooltipContent: "You are in the top 10% least energy consuming users.",
-      id: 1
-    };
+const getRelativeScore = (r, n) => {
+  // r = n - r + 1;
+  return r <= n / 2 ? ((r - 1) / n) * 100 : (r / n) * 100;
+};
+
+function getRating(r, n) {
+  let percentage = getRelativeScore(r, n);
+
+  for (let threshold in RATING_DATA) {
+    if (percentage <= Number(threshold)) {
+      return RATING_DATA[threshold];
+    }
   }
-  // Check if the user is in the top 50%
-  const isTop50Percent = r <= top50PercentThreshold;
-  if (isTop50Percent) {
-    return {
-      image: plantBlue,
-      tooltipContent: "You are in the top 50% least energy consuming users.",
-      id: 2
-    };
-  }
-  // Check if the user is in the bottom 10%
-  const isBottom10Percent = r > bottom10PercentThreshold;
-  if (isBottom10Percent) {
-    return {
-      image: plantRed,
-      tooltipContent: "You are in the top 10% most energy consuming users.",
-      id: 3
-    };
-  }
-  // Check if the user is in the bottom 50%
-  const isBottom50Percent = r > bottom50PercentThreshold;
-  if (isBottom50Percent) {
-    return {
-      image: plantYellow,
-      tooltipContent: "You are in the top 50% most energy consuming users.",
-      id: 4
-    };
-  }
+  return RATING_DATA["50"];
 }
 
 function RatingCard({ rating, index }) {
-  const { image, tooltipContent, id } = generateIconByRating(rating.value, rating.machines);
+  const { image, tooltipContent, id } = getRating(rating.value, rating.machines);
   const tooltipId = `rating-info--${index}-${id}`;
   return (
     <div className="rating-card">
