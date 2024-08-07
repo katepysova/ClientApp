@@ -71,7 +71,7 @@ function Task({ task, days }) {
       <button className="task__header spoiler-header" onClick={handleClick}>
         <div className="task__title">
           {renderIcon(task.icon)}
-          <span>{task.task_name}</span>
+          <span>{task.task_name || "Name Undefined"}</span>
         </div>
         <span className="spoiler-icon">
           <Icon symbol={icons.arrowDown}></Icon>
