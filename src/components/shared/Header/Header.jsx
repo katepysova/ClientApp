@@ -6,7 +6,7 @@ import { routes } from "@constants/routes.js";
 
 import "./Header.scss";
 
-const format = "DD/MM/YYYY HH:mm:ss";
+const format = "DD/MM/YYYY";
 
 export default function Header() {
   const [lastUpdate, setLastUpdate] = useState("-");
