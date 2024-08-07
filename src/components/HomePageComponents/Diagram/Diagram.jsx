@@ -97,11 +97,9 @@ function Diagram({ className }) {
     try {
       const formattedDate = formatValues(year, month, day);
       setIsLoading(true);
-      let query = `
-        SELECT SUM(Interval.total_energy_consumption) as total_energy_consumption,
+      let query = `SELECT SUM(Interval.total_energy_consumption) as total_energy_consumption,
                DATE(Interval.start_time) as date
-            FROM Interval
-    `;
+            FROM Interval`;
       if (formattedDate.year && formattedDate.month && formattedDate.day) {
         query += `\n WHERE date = '${formattedDate.year}-${formattedDate.month}-${formattedDate.day}'`;
       } else if (formattedDate.year && formattedDate.month) {
@@ -174,12 +172,13 @@ function Diagram({ className }) {
       }
     }
   };
+  // eslint-disable-next-line no-unused-vars
   const yearlyConsumption =
     totalConsumptionArray.length === 0
       ? "0"
       : ((totalConsumptionValue * 200) / totalConsumptionArray.length).toString();
-  // const cardTitle = `Total Energy Consumption: ${totalConsumptionValue} Joules`;
-  const cardTitle = `Estimated Annual Consumption: ${yearlyConsumption} Joules`;
+  const cardTitle = `Total Energy Consumption: ${totalConsumptionValue} Joules (${formatNumberToPrecision(totalConsumptionValue / 3600000, 6)} kWh)`;
+  // const cardTitle = `Estimated Annual Consumption: ${yearlyConsumption} Joules`;
   // const cardTitle = `Total Energy Consumption: ${totalConsumptionValue / 3600000} kWh`;
   // const cardTitle = `Estimated Annual Consumption: ${yearlyConsumption / 3600000} kWh`;
 

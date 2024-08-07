@@ -4,5 +4,5 @@ export const convertJoulesToGrams = (energy) => {
 };
 
 export const formatNumberToPrecision = (num, precision = 4) => {
-  return num.toFixed(precision);
+  return num === 0 ? 0 : num.toFixed(precision);
 };

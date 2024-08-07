@@ -12,21 +12,21 @@ function Rating({ className }) {
     {
       title: "Rating 1",
       value: 1,
-      machines: 3
+      machines: 10
     },
     {
       title: "Rating 2",
-      value: 2,
-      machines: 3
+      value: 4,
+      machines: 10
     },
     {
       title: "Rating 3",
-      value: 3,
-      machines: 3
+      value: 8,
+      machines: 10
     },
     {
       title: "Rating 4",
-      value: 1,
+      value: 10,
       machines: 10
     }
   ];
