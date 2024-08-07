@@ -22,6 +22,7 @@ function Task({ task }) {
   const commonItems = [
     {
       icon: icons.coffee,
+      class: 'coffee',
       title: "1 cup of coffee - 50g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
@@ -31,6 +32,7 @@ function Task({ task }) {
     },
     {
       icon: icons.beer,
+      class: 'beer',
       title: "1 pint of beer - 665g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
@@ -40,15 +42,17 @@ function Task({ task }) {
     },
     {
       icon: icons.clothes,
+      class: 'clothes',
       title: "€50 on clothes - 187g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
         const value = (50 * energyInGrams) / 187;
-        return `€${formatNumberToPrecision(value)}`;
+        return `€${formatNumberToPrecision(value)} of clothes`;
       }
     },
     {
       icon: icons.bag,
+      class: 'bag',
       title: "1 plastic bag - 33g CO2",
       carbonValue: (energyInJoules) => {
         const energyInGrams = convertJoulesToGrams(energyInJoules);
@@ -62,6 +66,16 @@ function Task({ task }) {
     toggleSpoilerOpen(!isSpoilerOpen);
   };
 
+  const itemElements = commonItems.map((item, index) => (
+    <div key={index} className="task__info">
+      <span className="task__info-label">
+        <Icon symbol={item["icon"]}></Icon>
+      </span>
+      <span className="task__info-value">{item["carbonValue"](task.energy_consumption)}</span>
+    </div>
+  ));
+
+  console.log(itemElements);
   return (
     <li className={cn("task spoiler", { open: isSpoilerOpen })}>
       <button className="task__header spoiler-header" onClick={handleClick}>
@@ -73,20 +87,22 @@ function Task({ task }) {
           <Icon symbol={icons.arrowDown}></Icon>
         </span>
       </button>
-      <div className="spoiler-body">
+      <div className="spoiler-body" style={{ overflow: "auto" }}>
         <div className="task__extra">
           <div className="task__info">
             <span className="task__info-label">Energy Consumption: </span>
             <span className="task__info-value">
-              {formatNumberToPrecision(task.energy_consumption)} Joules
+              {formatNumberToPrecision(task.energy_consumption)} Joules (
+              {formatNumberToPrecision(task.energy_consumption / 3600000, 4)} kWh)
             </span>
           </div>
           <div className="task__info">
-            <span className="task__info-label">Equivalent in grams: </span>
+            <span className="task__info-label">Equivalent in grams of CO2: </span>
             <span className="task__info-value">
               {formatNumberToPrecision(energyConsumptionInGrams)} Grams
             </span>
           </div>
+          {itemElements}
         </div>
       </div>
     </li>
