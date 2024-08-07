@@ -22,6 +22,7 @@ function Tasks({ className }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
+  const [totalUniqueDays, setTotalUniqueDays] = useState(0);
 
   const getTasksConsumptionData = async () => {
     const formatDateForQuery = (date) => {
@@ -46,19 +47,27 @@ function Tasks({ className }) {
         ON TaskConsumption.task_name = Task.task_name
         LEFT JOIN INTERVAL
         ON TaskConsumption.interval_id = Interval.id`;
-
+      let queryDays = `
+        SELECT COUNT(DISTINCT DATE(Interval.start_time)) as uniqueDays
+        FROM INTERVAL
+      `;
       if (formattedStartDate && formattedEndDate) {
         baseQuery += `\n WHERE date BETWEEN '${formattedStartDate}' AND '${formattedEndDate}'`;
+        queryDays += `\n WHERE DATE(Interval.start_time) BETWEEN '${formattedStartDate}' AND '${formattedEndDate}'`;
       } else if (formattedStartDate) {
         baseQuery += `\n WHERE date >= '${formattedStartDate}'`;
+        queryDays += `\n WHERE DATE(Interval.start_time) >= '${formattedStartDate}'`;
       } else if (formattedEndDate) {
         baseQuery += `\n WHERE date <'${formattedEndDate}'`;
+        queryDays += `\n WHERE DATE(Interval.start_time) < '${formattedEndDate}'`;
       }
 
       baseQuery += `\n GROUP BY Task.task_name
          ORDER BY energy_consumption DESC LIMIT 9;`;
 
       const tasksConsumptionData = await window.electron.fetchData(baseQuery);
+      const uniqueDays = await window.electron.fetchData(queryDays);
+      setTotalUniqueDays(uniqueDays[0]["uniqueDays"]);
       setTaskConsumptions(tasksConsumptionData);
     } catch (error) {
       console.error(error);
@@ -135,7 +144,7 @@ function Tasks({ className }) {
         {tasksConsumptions.length > 0 && !isLoading && (
           <List>
             {tasksConsumptions.map((task) => (
-              <Task key={task.task_name} task={task} />
+              <Task key={task.task_name} task={task} days={totalUniqueDays} />
             ))}
           </List>
         )}
