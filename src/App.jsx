@@ -4,10 +4,27 @@ import { useDispatch } from "react-redux";
 import dateTypes from "@store/date/dateTypes.js";
 import "@styles/main.scss";
 
-const ENERGY_CONSUMPTION_THRESHOLD = 100; // Joules
+const ENERGY_CONSUMPTION_THRESHOLD = 1000; // Joules
 
 export default function App() {
   const dispatch = useDispatch();
+
+  const getLastUpdatedDate = async () => {
+    try {
+      const data = await window.electron.fetchData(
+        `SELECT 
+                MAX(Interval.start_time) as lastUpdated
+                FROM Interval`
+      );
+      let { lastUpdated } = data[0];
+      dispatch({
+        type: dateTypes.setLastUpdatedDate,
+        payload: lastUpdated ? new Date(lastUpdated) : null
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getMinDate = async () => {
     try {
@@ -23,7 +40,7 @@ export default function App() {
     }
   };
 
-  const getOverTreshholdEnergyConsumingApps = async () => {
+  const getOverThresholdEnergyConsumingApps = async () => {
     try {
       let data = await window.electron.fetchData(
         `SELECT TaskConsumption.task_name,
@@ -52,8 +69,9 @@ export default function App() {
 
   useEffect(() => {
     getMinDate();
+    getLastUpdatedDate();
     setInterval(() => {
-      getOverTreshholdEnergyConsumingApps();
+      getOverThresholdEnergyConsumingApps();
     }, 3000 * 60);
   }, []);
 

@@ -3,6 +3,7 @@ import dateTypes from "@store/date/dateTypes";
 const initialState = {
   minDate: null,
   maxDate: new Date(),
+  lastUpdatedDate: null,
   exactDate: null
 };
 
@@ -24,6 +25,12 @@ export default function dateReducer(state = initialState, action) {
       return {
         ...state,
         exactDate: action.payload
+      };
+    }
+    case dateTypes.setLastUpdatedDate: {
+      return {
+        ...state,
+        lastUpdatedDate: action.payload
       };
     }
     default:

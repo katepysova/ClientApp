@@ -1,32 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import logo from "@images/logo.png";
 import { routes } from "@constants/routes.js";
 import { dateFormat } from "@constants/general.js";
+import { selectLastUpdatedDate } from "@store/date/dateSelector.js";
 import "./Header.scss";
 
 export default function Header() {
-  const [lastUpdate, setLastUpdate] = useState("-");
-
-  const getStatusUpdate = async () => {
-    try {
-      const data = await window.electron.fetchData(
-        `SELECT 
-                MAX(Interval.start_time) as lastUpdate
-                FROM Interval`
-      );
-      let { lastUpdate } = data[0];
-      lastUpdate = lastUpdate ? moment(new Date(lastUpdate)).format(dateFormat) : "-";
-      setLastUpdate(lastUpdate);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getStatusUpdate();
-  }, []);
+  const lastUpdatedDate = useSelector(selectLastUpdatedDate);
 
   return (
     <header className="header">
@@ -37,7 +20,9 @@ export default function Header() {
           </Link>
           <h3 className="header__title-text">PowerLeaf</h3>
         </div>
-        <p className="header__update-status">Last updated: {lastUpdate}</p>
+        <p className="header__update-status">
+          Last updated: {moment(new Date(lastUpdatedDate)).format(dateFormat) || "-"}
+        </p>
       </div>
     </header>
   );
