@@ -34,6 +34,7 @@
     "babel-plugin-module-resolver": "^5.0.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.0.0",
+    "dotenv-webpack": "^8.1.0",
     "electron": "31.2.1",
     "electron-rebuild": "^3.2.9",
     "eslint-config-prettier": "^9.1.0",
@@ -64,8 +65,10 @@
   "license": "MIT",
   "dependencies": {
     "@electron-forge/core": "^7.4.0",
+    "axios": "^1.7.3",
     "chart.js": "^4.4.3",
     "classnames": "^2.5.1",
+    "dotenv": "^16.4.5",
     "electron-squirrel-startup": "^1.0.1",
     "moment": "^2.30.1",
     "prop-types": "^15.8.1",

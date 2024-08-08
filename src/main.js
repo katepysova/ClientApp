@@ -3,6 +3,7 @@ const sqlite3 = require("sqlite3").verbose();
 const os = require("os");
 const path = require("path");
 const system = os.platform().toLowerCase();
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 
 const IS_DEV = process.env.BABEL_ENV === "development";
 
