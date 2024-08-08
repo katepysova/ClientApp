@@ -3,19 +3,22 @@ const sqlite3 = require("sqlite3").verbose();
 const os = require("os");
 const path = require("path");
 const system = os.platform().toLowerCase();
-let dbPath;
+
+const IS_DEV = process.env.BABEL_ENV === "development";
+console.log({ IS_DEV });
+
+if (require("electron-squirrel-startup")) {
+  app.quit();
+}
 
 const appIcon = nativeImage.createFromPath(path.join(process.cwd(), "/src/images/logo.png"));
 appIcon.setTemplateImage(true);
 
+let dbPath;
 if (system.startsWith("darwin")) {
   dbPath = "/Library/Application Support/PowerObserver/energy_measurements.db";
 } else {
   dbPath = path.join(os.tmpdir(), "PowerObserver/energy_measurements.db");
-}
-
-if (require("electron-squirrel-startup")) {
-  app.quit();
 }
 
 let db = new sqlite3.Database(dbPath, (err) => {
@@ -46,7 +49,9 @@ const createWindow = () => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (IS_DEV) {
+    mainWindow.webContents.openDevTools();
+  }
   mainWindow.maximize();
 };
 

@@ -208,15 +208,10 @@ function Diagram({ className }) {
       }
     }
   };
-  // eslint-disable-next-line no-unused-vars
-  const yearlyConsumption =
-    totalConsumptionArray.length === 0
-      ? "0"
-      : ((totalConsumptionValue * 200) / totalConsumptionArray.length).toString();
+
+  // const yearlyConsumption = totalConsumptionArray.length === 0 ? "0": ((totalConsumptionValue * 200) / totalConsumptionArray.length).toString();
+  // const cardTitle = `Estimated Annual Consumption: ${yearlyConsumption} Joules (${yearlyConsumption / 3600000} kWh)`;
   const cardTitle = `Total Energy Consumption: ${totalConsumptionValue} Joules (${formatNumberToPrecision(totalConsumptionValue / 3600000, 6)} kWh)`;
-  // const cardTitle = `Estimated Annual Consumption: ${yearlyConsumption} Joules`;
-  // const cardTitle = `Total Energy Consumption: ${totalConsumptionValue / 3600000} kWh`;
-  // const cardTitle = `Estimated Annual Consumption: ${yearlyConsumption / 3600000} kWh`;
 
   return (
     <div className={cn("diagram", className)}>
