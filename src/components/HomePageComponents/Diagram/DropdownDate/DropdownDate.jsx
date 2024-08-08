@@ -37,10 +37,10 @@ function CustomDropdownDate({
     if (year?.value) {
       let leftBoundary = 0;
       let rightBoundary = monthNames.length;
-      if (year.value === startYear) {
+      if (year?.value === startYear) {
         leftBoundary = startMonth;
       }
-      if (year.value === currentYear) {
+      if (year?.value === currentYear) {
         rightBoundary = currentMonth;
       }
       return monthNames

@@ -44,9 +44,7 @@ function Diagram({ className }) {
 
   const handleYearChange = (selectedOption) => {
     setYear(selectedOption);
-    if (!selectedOption) {
-      handleMonthChange(null);
-    }
+    handleMonthChange(null);
   };
 
   const handleMonthChange = (selectedOption) => {
@@ -158,11 +156,23 @@ function Diagram({ className }) {
   const options = {
     onClick: (e) => {
       const points = e.chart.getElementsAtEventForMode(e, "nearest", { intersect: true }, true);
-
       if (points.length) {
         const firstPoint = points[0];
-        const label = e.chart.data.labels[firstPoint.index];
-        console.log({ label });
+        const labelDate = e.chart.data.labels[firstPoint.index];
+        const dateComponents = labelDate.split("/");
+        const labelYear = Number(dateComponents[dateComponents.length - 1]) || null;
+        const labelMonth = Number(dateComponents[dateComponents.length - 2]) || null;
+        const labelDay = Number(dateComponents[dateComponents.length - 3]) || null;
+        handleYearChange(labelYear ? { value: labelYear, label: labelYear } : null);
+        handleMonthChange(
+          labelMonth ? { value: labelMonth, label: monthNames[labelMonth - 1] } : null
+        );
+        handleDayChange(labelDay ? { value: labelDay, label: labelDay } : null);
+      }
+    },
+    onHover: (e, chartElement) => {
+      if (chartElement.length === 1) {
+        e.native.target.style.cursor = "pointer";
       }
     },
     plugins: {
