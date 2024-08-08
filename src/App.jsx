@@ -45,7 +45,6 @@ export default function App() {
           window.electron.notify({ title, body });
         }, 1000);
       });
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

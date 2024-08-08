@@ -21,10 +21,11 @@ import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import CustomDropdownDate from "@components/HomePageComponents/Diagram/DropdownDate/DropdownDate.jsx";
 import Button from "@components/shared/Button/Button.jsx";
 
-import { monthNames } from "@constants/general.js";
+import { monthNames, dateFormat } from "@constants/general.js";
 import { formatNumberToPrecision } from "@common/service.js";
 
 import "./Diagram.scss";
+import moment from "moment";
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, BarElement, BarController);
 
@@ -98,16 +99,24 @@ function Diagram({ className }) {
       const formattedDate = formatValues(year, month, day);
       setIsLoading(true);
       let query = `SELECT SUM(Interval.total_energy_consumption) as total_energy_consumption,
-               DATE(Interval.start_time) as date
+               DATE(Interval.start_time) as date,
+               strftime('%Y', Interval.start_time) as year,
+               strftime('%m', Interval.start_time) as month,
+               strftime('%d', Interval.start_time) as day
             FROM Interval`;
       if (formattedDate.year && formattedDate.month && formattedDate.day) {
         query += `\n WHERE date = '${formattedDate.year}-${formattedDate.month}-${formattedDate.day}'`;
+        query += `\n GROUP BY date`;
       } else if (formattedDate.year && formattedDate.month) {
-        query += `\n WHERE strftime('%Y', date) = '${formattedDate.year}' AND strftime('%m', date) = '${formattedDate.month}'`;
+        query += `\n WHERE year = '${formattedDate.year}' AND month = '${formattedDate.month}'`;
+        query += `\n GROUP BY date`;
       } else if (formattedDate.year) {
-        query += `\n WHERE strftime('%Y', date) = '${formattedDate.year}'`;
+        query += `\n WHERE year = '${formattedDate.year}'`;
+        query += `\n GROUP BY month`;
+      } else {
+        query += `\n GROUP BY year`;
       }
-      query += `\n GROUP BY date`;
+
       const totalConsumptionData = await window.electron.fetchData(query);
       const sum = totalConsumptionData.reduce(
         (acc, value) => acc + value?.total_energy_consumption,
@@ -125,7 +134,15 @@ function Diagram({ className }) {
   };
 
   const data = {
-    labels: totalConsumptionArray.map((item) => item?.date),
+    labels: totalConsumptionArray.map((item) => {
+      if (month && year) {
+        return item?.date && moment(new Date(item?.date)).format(dateFormat);
+      } else if (year) {
+        return `${item?.month}/${item?.year}`;
+      } else {
+        return `${item?.year}`;
+      }
+    }),
     datasets: [
       {
         label: "Total Energy Consumption",
@@ -139,6 +156,15 @@ function Diagram({ className }) {
   };
 
   const options = {
+    onClick: (e) => {
+      const points = e.chart.getElementsAtEventForMode(e, "nearest", { intersect: true }, true);
+
+      if (points.length) {
+        const firstPoint = points[0];
+        const label = e.chart.data.labels[firstPoint.index];
+        console.log({ label });
+      }
+    },
     plugins: {
       title: {
         font: {

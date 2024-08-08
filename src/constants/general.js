@@ -13,6 +13,8 @@ export const monthNames = [
   "December"
 ];
 
+export const dateFormat = "DD/MM/YYYY";
+
 export const getDaysInMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
 };

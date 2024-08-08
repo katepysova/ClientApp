@@ -3,10 +3,8 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import logo from "@images/logo.png";
 import { routes } from "@constants/routes.js";
-
+import { dateFormat } from "@constants/general.js";
 import "./Header.scss";
-
-const format = "DD/MM/YYYY";
 
 export default function Header() {
   const [lastUpdate, setLastUpdate] = useState("-");
@@ -19,7 +17,7 @@ export default function Header() {
                 FROM Interval`
       );
       let { lastUpdate } = data[0];
-      lastUpdate = lastUpdate ? moment(new Date(lastUpdate)).format(format) : "-";
+      lastUpdate = lastUpdate ? moment(new Date(lastUpdate)).format(dateFormat) : "-";
       setLastUpdate(lastUpdate);
     } catch (error) {
       console.error(error);
