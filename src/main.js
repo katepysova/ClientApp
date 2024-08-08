@@ -5,7 +5,6 @@ const path = require("path");
 const system = os.platform().toLowerCase();
 
 const IS_DEV = process.env.BABEL_ENV === "development";
-console.log({ IS_DEV });
 
 if (require("electron-squirrel-startup")) {
   app.quit();
