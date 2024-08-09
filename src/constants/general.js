@@ -20,3 +20,5 @@ export const getDaysInMonth = (year, month) => {
 };
 
 export const LIMIT = 9;
+
+export const LOADER_TIMEOUT = 500;

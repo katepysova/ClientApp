@@ -9,7 +9,7 @@ import Task from "@components/HomePageComponents/Tasks/Task/Task.jsx";
 import Loader from "@components/shared/Loader/Loader.jsx";
 import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import moment from "moment";
-import { getDaysInMonth, LIMIT } from "@constants/general.js";
+import { getDaysInMonth, LIMIT, LOADER_TIMEOUT } from "@constants/general.js";
 
 import { selectMinDate, selectExactDate } from "@store/date/dateSelector.js";
 
@@ -47,6 +47,7 @@ function Tasks({ className }) {
         ON TaskConsumption.task_name = Task.task_name
         LEFT JOIN INTERVAL
         ON TaskConsumption.interval_id = Interval.id`;
+
       let queryDays = `
         SELECT COUNT(DISTINCT DATE(Interval.start_time)) as uniqueDays
         FROM INTERVAL
@@ -74,7 +75,7 @@ function Tasks({ className }) {
     } finally {
       setTimeout(() => {
         setIsLoading(false);
-      }, 500);
+      }, LOADER_TIMEOUT);
     }
   };
 

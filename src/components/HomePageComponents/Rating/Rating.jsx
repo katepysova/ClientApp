@@ -8,6 +8,7 @@ import RatingCard from "@components/HomePageComponents/Rating/RatingCard/RatingC
 import Loader from "@components/shared/Loader/Loader.jsx";
 import { apiURLs } from "@constants/apiUrls.js";
 import { selectUserPcId } from "@store/user/userSelector.js";
+import { LOADER_TIMEOUT } from "@constants/general.js";
 
 import "./Rating.scss";
 
@@ -30,7 +31,7 @@ function Rating({ className }) {
     } finally {
       setTimeout(() => {
         setIsLoading(false);
-      }, 500);
+      }, LOADER_TIMEOUT);
     }
   };
 

@@ -21,7 +21,7 @@ import EmptyState from "@components/shared/EmptyState/EmptyState.jsx";
 import CustomDropdownDate from "@components/HomePageComponents/Diagram/DropdownDate/DropdownDate.jsx";
 import Button from "@components/shared/Button/Button.jsx";
 
-import { monthNames, dateFormat } from "@constants/general.js";
+import { monthNames, dateFormat, LOADER_TIMEOUT } from "@constants/general.js";
 import { formatNumberToPrecision } from "@common/service.js";
 
 import "./Diagram.scss";
@@ -128,7 +128,7 @@ function Diagram({ className }) {
     } finally {
       setTimeout(() => {
         setIsLoading(false);
-      }, 500);
+      }, LOADER_TIMEOUT);
     }
   };
 
