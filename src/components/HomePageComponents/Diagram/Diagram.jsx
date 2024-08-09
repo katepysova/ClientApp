@@ -73,7 +73,7 @@ function Diagram({ className }) {
     setDay({ value: currentDay, label: currentDay });
   };
 
-  const handleUpdateButttonClick = async () => {
+  const handleRefreshButtonClick = async () => {
     const formattedDate = formatValues(year, month, day);
     dispatch({ type: dateTypes.setExactDate, payload: formattedDate });
     dispatch({ type: dateTypes.fetchLastUpdatedDate });
@@ -89,7 +89,7 @@ function Diagram({ className }) {
   };
 
   useEffect(() => {
-    handleUpdateButttonClick();
+    handleRefreshButtonClick();
     getTotalConsumption();
   }, [year, month, day]);
 
@@ -230,8 +230,8 @@ function Diagram({ className }) {
           <Button className="btn--primary" onClick={handleResetButtonClick}>
             Reset to current date
           </Button>
-          <Button className="btn--secondary" onClick={handleUpdateButttonClick}>
-            Update
+          <Button className="btn--secondary" onClick={handleRefreshButtonClick}>
+            Refresh
           </Button>
         </div>
         {isLoading && <Loader />}

@@ -23,8 +23,6 @@ function Rating({ className }) {
       const body = { pc_id: userPcId };
       const response = await API.post(apiURLs.rankings, body);
       const ratingsData = response.data;
-
-      console.log(ratingsData);
       setRatingList(ratingsData);
     } catch (error) {
       console.log(error);
