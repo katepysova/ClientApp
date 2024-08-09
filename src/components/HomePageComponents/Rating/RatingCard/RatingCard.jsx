@@ -57,7 +57,7 @@ function RatingCard({ rating, index }) {
         <img src={image} alt="plant" />
       </figure>
 
-      <h5 className={"rating-card__title heading-4"}>{rating.title}</h5>
+      <h5 className={"rating-card__title heading-5"}>{rating.title}</h5>
       <p className={"rating-card__value"}>
         {rating.rating} / {rating.totalMachines}
       </p>

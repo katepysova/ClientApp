@@ -1,0 +1,11 @@
+@mixin line-clip($lines-number: 1, $is-flex-item: false) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines-number;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @if $is-flex-item {
+    min-width: 0;
+  }
+}

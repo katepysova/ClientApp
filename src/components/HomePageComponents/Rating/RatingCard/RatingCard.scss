@@ -1,4 +1,5 @@
 @import "src/styles/variables";
+@import "src/styles/mixins";
 
 .rating-card {
   border: 1px solid $color-light-grey;
@@ -11,6 +12,8 @@
   position: relative;
 
   &__title {
+    @include line-clip;
+
     text-transform: capitalize;
     text-align: center;
     margin-top: 8px;
