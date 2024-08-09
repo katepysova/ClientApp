@@ -49,7 +49,7 @@ function getRating(r, n) {
 }
 
 function RatingCard({ rating, index }) {
-  const { image, tooltipContent, id } = getRating(rating.value, rating.machines);
+  const { image, tooltipContent, id } = getRating(rating.rating, rating.totalMachines);
   const tooltipId = `rating-info--${index}-${id}`;
   return (
     <div className="rating-card">
@@ -59,7 +59,7 @@ function RatingCard({ rating, index }) {
 
       <h5 className={"rating-card__title heading-4"}>{rating.title}</h5>
       <p className={"rating-card__value"}>
-        {rating.value} / {rating.machines}
+        {rating.rating} / {rating.totalMachines}
       </p>
       <div className={"rating-card__tooltip"}>
         <img src={info} alt={info} data-tooltip-id={tooltipId} />

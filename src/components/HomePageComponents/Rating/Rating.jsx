@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import API from "@common/api.js";
 import Card from "@components/shared/Card/Card.jsx";
 import RatingCard from "@components/HomePageComponents/Rating/RatingCard/RatingCard.jsx";
+import Loader from "@components/shared/Loader/Loader.jsx";
 import { apiURLs } from "@constants/apiUrls.js";
+import { selectUserPcId } from "@store/user/userSelector.js";
 
 import "./Rating.scss";
 
 function Rating({ className }) {
-  // eslint-disable-next-line no-unused-vars
+  const userPcId = useSelector(selectUserPcId);
   const [ratingList, setRatingList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getRatingList = async () => {
     try {
-      const body = { pc_id: "" };
+      setIsLoading(true);
+      const body = { pc_id: userPcId };
       const response = await API.post(apiURLs.rankings, body);
       const ratingsData = response.data;
 
@@ -22,6 +27,10 @@ function Rating({ className }) {
       setRatingList(ratingsData);
     } catch (error) {
       console.log(error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 
@@ -29,36 +38,20 @@ function Rating({ className }) {
     getRatingList();
   }, []);
 
-  const rating = [
-    {
-      title: "Rating 1",
-      value: 1,
-      machines: 10
-    },
-    {
-      title: "Rating 2",
-      value: 4,
-      machines: 10
-    },
-    {
-      title: "Rating 3",
-      value: 8,
-      machines: 10
-    },
-    {
-      title: "Rating 4",
-      value: 10,
-      machines: 10
-    }
-  ];
   return (
     <div className={cn("rating", className)}>
       <Card title="Your rating">
-        <div className="rating__list">
-          {rating.map((item, index) => (
-            <RatingCard key={item.title} rating={item} index={index} />
-          ))}
-        </div>
+        {isLoading && <Loader />}
+        {ratingList.length === 0 && !isLoading && (
+          <div className="rating__empty-state heading-tertiary">Data not found</div>
+        )}
+        {ratingList.length > 0 && !isLoading && (
+          <div className="rating__list">
+            {ratingList.map((item, index) => (
+              <RatingCard key={item.title} rating={item} index={index} />
+            ))}
+          </div>
+        )}
       </Card>
     </div>
   );
