@@ -2,43 +2,13 @@ import React, { useEffect } from "react";
 import AppRouter from "@/router/Router.jsx";
 import { useDispatch } from "react-redux";
 import dateTypes from "@store/date/dateTypes.js";
+import userTypes from "@store/user/userTypes.js";
 import "@styles/main.scss";
 
 const ENERGY_CONSUMPTION_THRESHOLD = 1000; // Joules
 
 export default function App() {
   const dispatch = useDispatch();
-
-  const getLastUpdatedDate = async () => {
-    try {
-      const data = await window.electron.fetchData(
-        `SELECT 
-                MAX(Interval.start_time) as lastUpdated
-                FROM Interval`
-      );
-      let { lastUpdated } = data[0];
-      dispatch({
-        type: dateTypes.setLastUpdatedDate,
-        payload: lastUpdated ? new Date(lastUpdated) : null
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getMinDate = async () => {
-    try {
-      const data = await window.electron.fetchData(
-        `SELECT 
-                MIN(Interval.start_time) as minDate
-                FROM Interval`
-      );
-      const { minDate } = data[0];
-      dispatch({ type: dateTypes.setMinDate, payload: minDate ? new Date(minDate) : null });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const getOverThresholdEnergyConsumingApps = async () => {
     try {
@@ -68,8 +38,9 @@ export default function App() {
   };
 
   useEffect(() => {
-    getMinDate();
-    getLastUpdatedDate();
+    dispatch({ type: dateTypes.fetchLastUpdatedDate });
+    dispatch({ type: dateTypes.fetchMinDate });
+    dispatch({ type: userTypes.fetchUserPcId });
     setInterval(() => {
       getOverThresholdEnergyConsumingApps();
     }, 3000 * 60);

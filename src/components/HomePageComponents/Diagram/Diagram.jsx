@@ -76,6 +76,7 @@ function Diagram({ className }) {
   const handleUpdateButttonClick = async () => {
     const formattedDate = formatValues(year, month, day);
     dispatch({ type: dateTypes.setExactDate, payload: formattedDate });
+    dispatch({ type: dateTypes.fetchLastUpdatedDate });
     await getTotalConsumption();
   };
 
