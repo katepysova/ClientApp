@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
-
+import API from "@common/api.js";
 import Card from "@components/shared/Card/Card.jsx";
 import RatingCard from "@components/HomePageComponents/Rating/RatingCard/RatingCard.jsx";
+import { apiURLs } from "@constants/apiUrls.js";
 
 import "./Rating.scss";
 
 function Rating({ className }) {
+  // eslint-disable-next-line no-unused-vars
+  const [ratingList, setRatingList] = useState([]);
+
+  const getRatingList = async () => {
+    try {
+      const body = { pc_id: "" };
+      const response = await API.post(apiURLs.rankings, body);
+      const ratingsData = response.data;
+
+      console.log(ratingsData);
+      setRatingList(ratingsData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getRatingList();
+  }, []);
+
   const rating = [
     {
       title: "Rating 1",
