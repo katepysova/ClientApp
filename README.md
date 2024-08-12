@@ -16,6 +16,15 @@ Use the package manager [npm](https://nodejs.org/en/learn/getting-started/an-int
 npm install
 ```
 
+#### Git pre-commit hook
+
+Install [Husky](https://typicode.github.io/husky/]) pre-commit hook, if it hasn't installed automatically.
+
+```bash
+npm run prepare
+```
+
+
 ## Usage
 
 ### Running in Development Mode
@@ -104,12 +113,4 @@ Run eslint and stylelint together.
 
 ```bash
 npm run format
-```
-
-### Git pre-commit hook
-
-Install [Husky](https://typicode.github.io/husky/]) pre-commit hook.
-
-```bash
-npm run prepare
 ```
