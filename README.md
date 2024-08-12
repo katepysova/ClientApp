@@ -18,6 +18,8 @@ npm install
 
 ## Usage
 
+### Running in Development Mode
+
 To start the application in the development mode, use:
 
 ```bash
