@@ -7,7 +7,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development BABEL_ENV=development electron-forge start",
     "package": "cross-env NODE_ENV=production BABEL_ENV=production electron-forge package",
-    "package:mac": "cross-env NODE_ENV=production BABEL_ENV=production electron-forge package --platform=darwin --arch=x64",
+    "package:mac=arm64": "cross-env NODE_ENV=production BABEL_ENV=production electron-forge package --platform=darwin --arch=arm64",
+    "package:mac=x64": "cross-env NODE_ENV=production BABEL_ENV=production electron-forge package --platform=darwin --arch=x64",
     "package:win": "cross-env NODE_ENV=production BABEL_ENV=production electron-forge package --platform=win32 --arch=ia32",
     "make": "cross-env NODE_ENV=production BABEL_ENV=production electron-forge make",
     "publish": "cross-env NODE_ENV=production BABEL_ENV=production electron-forge publish",

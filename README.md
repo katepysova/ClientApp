@@ -37,7 +37,11 @@ npm run package
 ```
 
 ```bash
-npm run package:mac
+npm run package:mac=arm64
+```
+
+```bash
+npm run package:mac=x64
 ```
 
 ```bash
