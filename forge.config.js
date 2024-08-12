@@ -33,6 +33,9 @@ module.exports = {
         format: "ULFO"
       },
       platforms: ["darwin"]
+    },
+    {
+      name: "@electron-forge/maker-squirrel"
     }
   ],
   plugins: [
